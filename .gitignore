@@ -1,0 +1,19 @@
+# Default ignored files
+/shelf/
+/.idea/workspace.xml
+
+.gradle/
+build/
+
+.idea/
+*.iml
+out/
+
+*.class
+
+*.log
+*.bin
+*.lock
+
+.DS_Store
+Thumbs.db
