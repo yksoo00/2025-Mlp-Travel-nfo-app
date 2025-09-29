@@ -11,12 +11,19 @@ public class TouristSpotController {
 
     public void selectTouristSpotByTitle(Long memberId, String title) {
         TravelView travelView = new TravelView();
-        ArrayList<TouristSpotDto> list = memberService.selectTourSpotsByTitle(title);
 
-        if (!list.isEmpty()) {
-            travelView.displayRegionTitle(list);
-        } else {
-            travelView.displayNoData();
+
+        try{
+            ArrayList<TouristSpotDto> list = memberService.selectTourSpotsByTitle(title);
+            if (!list.isEmpty()) {
+                travelView.displayRegionTitle(list);
+            } else {
+                travelView.displayNoData();
+            }
+
+        }catch (RuntimeException e){
+            e.printStackTrace();
+
         }
 
 
@@ -27,16 +34,22 @@ public class TouristSpotController {
 
 
 
-
     public void selectTouristSpotByDistrict(Long memberId, String district) {
         TravelView travelView = new TravelView();
-        ArrayList<TouristSpotDto> list = memberService.selectTourSpotsByRegion(district);
 
-        if (!list.isEmpty()) {
-            travelView.displayRegionPlace(list);
-        } else {
-            travelView.displayNoData();
+        try{
+            ArrayList<TouristSpotDto> list = memberService.selectTourSpotsByRegion(district);
+
+            if (!list.isEmpty()) {
+                travelView.displayRegionPlace(list);
+            } else {
+                travelView.displayNoData();
+            }
+
+        }catch (RuntimeException e){
+            e.printStackTrace();
         }
+
     }
 
 
