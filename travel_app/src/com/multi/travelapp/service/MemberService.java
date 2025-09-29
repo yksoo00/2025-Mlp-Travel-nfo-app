@@ -118,4 +118,22 @@ public MemberDto signIn(SignInDto signInDto) {
 
 }
 
+    public ArrayList<TouristSpotDto> selectTouristSpotById(Long memberId, Long touristSpotId) {
+        ArrayList<TouristSpotDto> list = new ArrayList<>();
+        Connection conn = null;
+
+        try {
+            conn = dbcp.getConnection();
+            list = touristSpotDao.selectTourSpotsById(conn, memberId,touristSpotId);
+        } catch (Exception e) {
+            throw new RuntimeException("상세정보 조회 실패", e);
+        } finally {
+            if (conn != null) {
+                dbcp.freeConnection(conn);
+            }
+        }
+
+        return list;
+
+    }
 }

@@ -8,10 +8,8 @@ import java.util.ArrayList;
 
 public class TouristSpotController {
 
-
     public void selectTouristSpotByTitle(Long memberId, String title) {
         TravelView travelView = new TravelView();
-
 
         try{
             ArrayList<TouristSpotDto> list = memberService.selectTourSpotsByTitle(title);
@@ -53,5 +51,27 @@ public class TouristSpotController {
     }
 
 
+    //장소 아이디로 상세정보조회
+    public ArrayList<TouristSpotDto> selectTouristSpotById(Long memberId, Long touristSpotId) {
+        TravelView travelView = new TravelView();
+        ArrayList<TouristSpotDto> list=new ArrayList<>();
+
+        try{
+             list = memberService.selectTouristSpotById(memberId,touristSpotId);
+
+            if (!list.isEmpty()) {
+                travelView.detailPage(memberId,touristSpotId,list);
+            } else {
+                travelView.displayNoData();
+            }
+
+        }catch (RuntimeException e){
+            e.printStackTrace();
+        }
+
+        return list;
+
+
+    }
 }
 

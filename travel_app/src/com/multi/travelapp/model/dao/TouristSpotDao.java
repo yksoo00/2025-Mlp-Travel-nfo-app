@@ -61,4 +61,34 @@ public class TouristSpotDao {
 
         return list;
     }
+
+    public ArrayList<TouristSpotDto> selectTourSpotsById(Connection conn, Long memberId, Long touristSpotId) {
+        ArrayList<TouristSpotDto> list = new ArrayList<>();
+        String sql = "SELECT * FROM tourist_spot WHERE tourist_spot_id = ?";
+
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1,touristSpotId);
+
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    TouristSpotDto dto = new TouristSpotDto();
+                    dto.setId(rs.getInt("tourist_spot_id"));
+                    dto.setTitle(rs.getString("title"));
+                    dto.setDistrict(rs.getString("district"));
+                    dto.setDescription(rs.getString("description"));
+                    dto.setAddress(rs.getString("address"));
+                    dto.setPhone(rs.getString("phone"));
+                    list.add(dto);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return list;
+
+
+    }
 }
