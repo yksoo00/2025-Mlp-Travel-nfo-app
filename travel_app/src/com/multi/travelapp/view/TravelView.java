@@ -66,8 +66,8 @@ public class TravelView {
                     System.out.print("비밀번호 입력 : "); // 비밀번호 입력
                     String password = sc.nextLine();
 
-                    //SignInDto signInDto = new SignInDto(email, password);
-                    //travelController.signIn(signInDto); // 로그인
+                    SignInDto signInDto = new SignInDto(email, password);
+                    memberController.signIn(signInDto); // 로그인
                     break;
                 case 9:
                     return;
@@ -103,17 +103,17 @@ public class TravelView {
                     String address = sc.nextLine();
 
                     MemberDto memberDto = new MemberDto();
-                    //memberDto.setName(name);
-                    //memberDto.setEmail(email);
-                    //memberDto.setPassword(password);
-                    //memberDto.setPhone(phone);
-                    //memberDto.setAddress(address);
+                    memberDto.setName(name);
+                    memberDto.setEmail(email);
+                    memberDto.setPassword(password);
+                    memberDto.setPhone(phone);
+                    memberDto.setAddress(address);
 
-                    //boolean result = travelController.signUp(memberDto);
-//                    if(result){
-//                        System.out.println("로그인/회원가입 화면으로 이동");
-//                        return;
-//                    }
+                    boolean result = memberController.signUp(memberDto);
+                    if(result){
+                        System.out.println("로그인/회원가입 화면으로 이동");
+                        return;
+                    }
 
                     break;
                 case "9":
