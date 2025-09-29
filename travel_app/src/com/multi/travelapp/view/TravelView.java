@@ -23,29 +23,29 @@ public class TravelView {
 
 
     public void firstPage() {
-//        while (true) {
-//            System.out.println();
-//            System.out.println("---로그인/회원가입 화면---");
-//            System.out.println("1. 로그인");
-//            System.out.println("2. 회원가입");
-//            System.out.println("9. Travel App 종료");
-//            System.out.print("입력 : ");
-//            int input = Integer.parseInt(sc.nextLine());
-//            switch (input) {
-//                case 1:
-//                    signInPage(); // 로그인 화면
-//                    break;
-//                case 2:
-//                    signUpPage(); // 회원가입 화면
-//                    break;
-//                case 9:
-//                    exit(0);
-//                    break;
-//                default:
-//                    System.out.println("올바른 값을 입력해주세요");
-//                    break;
-//            }
-//        }
+        while (true) {
+            System.out.println();
+            System.out.println("---로그인/회원가입 화면---");
+            System.out.println("1. 로그인");
+            System.out.println("2. 회원가입");
+            System.out.println("9. Travel App 종료");
+            System.out.print("입력 : ");
+            int input = Integer.parseInt(sc.nextLine());
+            switch (input) {
+                case 1:
+                    signInPage(); // 로그인 화면
+                    break;
+                case 2:
+                    signUpPage(); // 회원가입 화면
+                    break;
+                case 9:
+                    exit(0);
+                    break;
+                default:
+                    System.out.println("올바른 값을 입력해주세요");
+                    break;
+            }
+        }
 
     }
 
@@ -256,21 +256,7 @@ public class TravelView {
         }
     }
 
-    // 소도시 목록 출력
-//    private void showSmallRegionList() {
-//        ArrayList<String> smallRegions = TouristSpotController.getSmallRegionList();
-//
-//        if (smallRegions == null || smallRegions.isEmpty()) {
-//            System.out.println("조회된 결과가 없습니다.");
-//            return;
-//        }
-//
-//        System.out.println("\n==== 소도시 목록 ====");
-//        for (String region : smallRegions) {
-//            System.out.print(region + " ");
-//        }
-//        System.out.println("\n===================");
-//    }
+
 
     // 권역별 관광지 조회
     public void byRegionTouristSpotPage(Long memberId){
