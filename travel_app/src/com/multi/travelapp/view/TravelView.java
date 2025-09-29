@@ -50,79 +50,80 @@ public class TravelView {
     }
 
     public void signInPage() {
-//        while(true) {
-//            System.out.println();
-//            System.out.println("---로그인 화면---");
-//            System.out.println("1. 로그인");
-//            System.out.println("9. 로그인/회원가입 화면으로 이동");
-//            System.out.print("입력 : ");
-//            int input = Integer.parseInt(sc.nextLine());
-//
-//            switch (input){
-//                case 1:
-//                    System.out.print("이메일 입력 : "); // 이메일 입력
-//                    String email = sc.nextLine();
-//
-//                    System.out.print("비밀번호 입력 : "); // 비밀번호 입력
-//                    String password = sc.nextLine();
-//
-//                    //SignInDto signInDto = new SignInDto(email, password);
-//                    //travelController.signIn(signInDto); // 로그인
-//                    break;
-//                case 9:
-//                    return;
-//                default:
-//                    System.out.println("올바른 값을 입력해주세요");
-//                    break;
-//            }
-//
-//
-//        }
+        while(true) {
+            System.out.println();
+            System.out.println("---로그인 화면---");
+            System.out.println("1. 로그인");
+            System.out.println("9. 로그인/회원가입 화면으로 이동");
+            System.out.print("입력 : ");
+            int input = Integer.parseInt(sc.nextLine());
+
+            switch (input){
+                case 1:
+                    System.out.print("이메일 입력 : "); // 이메일 입력
+                    String email = sc.nextLine();
+
+                    System.out.print("비밀번호 입력 : "); // 비밀번호 입력
+                    String password = sc.nextLine();
+
+                    SignInDto signInDto = new SignInDto(email, password);
+                    memberController.signIn(signInDto); // 로그인
+                    break;
+                case 9:
+                    return;
+                default:
+                    System.out.println("올바른 값을 입력해주세요");
+                    break;
+            }
+
+
+        }
     }
 
     public void signUpPage() {
-//        while(true) {
-//            System.out.println();
-//            System.out.println("---회원가입 화면---");
-//            System.out.println("1. 회원가입");
-//            System.out.println("9. 로그인/회원가입 화면으로 이동");
-//            System.out.print("입력 : ");
-//            String input = sc.nextLine();
-//
-//            switch (input){
-//                case "1":
-//                    System.out.print("이름 입력 : ");
-//                    String name = sc.nextLine();
-//                    System.out.print("이메일 입력 : ");
-//                    String email = sc.nextLine();
-//                    System.out.print("비밀번호 입력 : ");
-//                    String password = sc.nextLine();
-//                    System.out.print("휴대폰 번호 : ");
-//                    String phone = sc.nextLine();
-//                    System.out.print("주소 입력 : ");
-//                    String address = sc.nextLine();
-//
-//                    MemberDto memberDto = new MemberDto();
-//                    //memberDto.setName(name);
-//                    //memberDto.setEmail(email);
-//                    //memberDto.setPassword(password);
-//                    //memberDto.setPhone(phone);
-//                    //memberDto.setAddress(address);
-//
-//                    //boolean result = travelController.signUp(memberDto);
-////                    if(result){
-////                        System.out.println("로그인/회원가입 화면으로 이동");
-////                        return;
-////                    }
-//
-//                    break;
-//                case "9":
-//                    return;
-//                default:
-//                    System.out.println("올바른 값을 입력하세요");
-//                    break;
-//            }
-//        }
+        while(true) {
+            System.out.println();
+            System.out.println("---회원가입 화면---");
+            System.out.println("1. 회원가입");
+            System.out.println("9. 로그인/회원가입 화면으로 이동");
+            System.out.print("입력 : ");
+            String input = sc.nextLine();
+
+            switch (input){
+                case "1":
+                    System.out.print("이름 입력 : ");
+                    String name = sc.nextLine();
+                    System.out.print("이메일 입력 : ");
+                    String email = sc.nextLine();
+                    System.out.print("비밀번호 입력 : ");
+                    String password = sc.nextLine();
+                    System.out.print("휴대폰 번호 : ");
+                    String phone = sc.nextLine();
+                    System.out.print("주소 입력 : ");
+                    String address = sc.nextLine();
+
+                    MemberDto memberDto = new MemberDto();
+                    memberDto.setName(name);
+                    memberDto.setEmail(email);
+                    memberDto.setPassword(password);
+                    memberDto.setPhone(phone);
+                    memberDto.setAddress(address);
+
+                    boolean result = memberController.signUp(memberDto);
+                    if(result){
+                        System.out.println("로그인/회원가입 화면으로 이동");
+                        return;
+                    }
+
+                    break;
+                case "9":
+                    return;
+                default:
+                    System.out.println("올바른 값을 입력하세요");
+                    break;
+            }
+        }
+
     }
 
 
