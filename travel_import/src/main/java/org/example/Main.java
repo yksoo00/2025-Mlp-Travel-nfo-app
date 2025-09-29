@@ -26,8 +26,8 @@ public class Main {
             Statement stmt = conn.createStatement();
 
             String createSql = """
-                    CREATE TABLE IF NOT EXISTS travel (
-                        no INT PRIMARY KEY,
+                    CREATE TABLE IF NOT EXISTS tourist_spot (
+                        tourist_spot_id INT PRIMARY KEY,
                         district VARCHAR(50),
                         title VARCHAR(255),
                         description TEXT,
@@ -43,7 +43,7 @@ public class Main {
                 String[] line;
                 reader.readNext();
 
-                String sql = "INSERT INTO travel (no, district, title, description, address, phone) VALUES (?, ?, ?, ?, ?, ?)";
+                String sql = "INSERT INTO tourist_spot (tourist_spot_id, district, title, description, address, phone) VALUES (?, ?, ?, ?, ?, ?)";
                 PreparedStatement statement = conn.prepareStatement(sql);
 
                 while ((line = reader.readNext()) != null) {
