@@ -317,7 +317,7 @@ public class TravelView {
 
             switch (input){
                 case 1:
-                    //travelController.selectAllTouristSpotOrderByLikes(memberId);
+                    likesController.selectAllTouristSpotOrderByLikes();
                     break;
                 case 2:
                     System.out.print("(상세 정보 보기) 관광지 ID 입력 : ");
@@ -539,5 +539,15 @@ public class TravelView {
 
     public void displayLikesCount(Long touristSpotId, int totalLikes) {
         System.out.println("관광지 ID [" + touristSpotId + "]의 현재 좋아요 수: " + totalLikes);
+    }
+
+    public void displayTouristSpotsByLikes(List<TouristSpotDto> spots) {
+        System.out.println("\n------ 관광지 목록 (좋아요 순) ------");
+        for (TouristSpotDto spot : spots) {
+            System.out.println("ID: " + spot.getTouristSpotId() +
+                    ", 제목: " + spot.getTitle() +
+                    ", 권역: " + spot.getDistrict() +
+                    ", 좋아요 수: " + spot.getLikeCount());
+        }
     }
 }

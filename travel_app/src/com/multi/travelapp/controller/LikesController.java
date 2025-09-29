@@ -1,7 +1,10 @@
 package com.multi.travelapp.controller;
 
+import com.multi.travelapp.model.dto.TouristSpotDto;
 import com.multi.travelapp.service.LikesService;
 import com.multi.travelapp.view.TravelView;
+
+import java.util.List;
 
 public class LikesController {
     private LikesService likesService = new LikesService();
@@ -14,6 +17,7 @@ public class LikesController {
     public LikesController(TravelView travelView) {
         this.travelView = travelView;
     }
+
 
     public void updateLikes(Long memberId, Long touristSpotId) {
         boolean isLiked = likesService.checkIfLiked(memberId, touristSpotId);
@@ -34,9 +38,13 @@ public class LikesController {
         travelView.displayLikesCount(touristSpotId, totalLikes);
 
 
-
-
-
-
     }
+
+
+
+    public void selectAllTouristSpotOrderByLikes() {
+        List<TouristSpotDto> spots = likesService.getTouristSpotsOrderByLikes();
+        travelView.displayTouristSpotsByLikes(spots);
+    }
+
 }

@@ -20,7 +20,7 @@ public class TouristSpotDao {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     TouristSpotDto dto = new TouristSpotDto();
-                    dto.setId(rs.getInt("tourist_spot_id"));
+                    dto.setTouristSpotId(rs.getLong("tourist_spot_id"));
                     dto.setTitle(rs.getString("title"));
                     dto.setDistrict(rs.getString("district"));
                     list.add(dto);
@@ -46,7 +46,7 @@ public class TouristSpotDao {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     TouristSpotDto dto = new TouristSpotDto();
-                    dto.setId(rs.getInt("tourist_spot_id"));
+                    dto.setTouristSpotId(rs.getLong("tourist_spot_id"));
                     dto.setTitle(rs.getString("title"));
                     dto.setDistrict(rs.getString("district"));
                     dto.setDescription(rs.getString("description"));
@@ -74,7 +74,7 @@ public class TouristSpotDao {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     TouristSpotDto dto = new TouristSpotDto();
-                    dto.setId(rs.getInt("tourist_spot_id"));
+                    dto.setTouristSpotId(rs.getLong("tourist_spot_id"));
                     dto.setTitle(rs.getString("title"));
                     dto.setDistrict(rs.getString("district"));
                     dto.setDescription(rs.getString("description"));

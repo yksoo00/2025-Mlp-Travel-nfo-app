@@ -2,8 +2,10 @@ package com.multi.travelapp.service;
 
 import com.multi.travelapp.common.DBConnectionMgr;
 import com.multi.travelapp.model.dao.LikesDao;
+import com.multi.travelapp.model.dto.TouristSpotDto;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class LikesService {
     private final LikesDao likesDao = new LikesDao();
@@ -57,4 +59,20 @@ public class LikesService {
             if (conn != null) dbcp.freeConnection(conn);
         }
     }
+
+
+    public List<TouristSpotDto> getTouristSpotsOrderByLikes() {
+        Connection conn = null;
+        try {
+            conn = dbcp.getConnection();
+            return likesDao.findAllTouristSpotsOrderByLikes(conn);
+        } catch (Exception e) {
+            throw new RuntimeException("좋아요 순 관광지 조회 실패", e);
+        } finally {
+            if (conn != null) dbcp.freeConnection(conn);
+        }
+    }
+
+
+
 }

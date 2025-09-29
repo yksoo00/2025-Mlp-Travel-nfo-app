@@ -1,9 +1,13 @@
 package com.multi.travelapp.model.dao;
 
+import com.multi.travelapp.model.dto.TouristSpotDto;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LikesDao {
 
@@ -55,4 +59,36 @@ public class LikesDao {
             }
         }
     }
+
+    // 좋아요 순으로 목록 조회
+    public List<TouristSpotDto> findAllTouristSpotsOrderByLikes(Connection conn) throws SQLException {
+        List<TouristSpotDto> list = new ArrayList<>();
+
+        String sql = "SELECT ts.tourist_spot_id, ts.title, ts.district, ts.description, ts.address, ts.phone, " +
+                "       COUNT(l.likes_id) AS like_count " +
+                "FROM tourist_spot ts " +
+                "LEFT JOIN likes l ON ts.tourist_spot_id = l.tourist_spot_id " +
+                "GROUP BY ts.tourist_spot_id " +
+                "ORDER BY like_count DESC";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                TouristSpotDto dto = new TouristSpotDto();
+                dto.setTouristSpotId(rs.getLong("tourist_spot_id"));
+                dto.setTitle(rs.getString("title"));
+                dto.setDistrict(rs.getString("district"));
+                dto.setDescription(rs.getString("description"));
+                dto.setAddress(rs.getString("address"));
+                dto.setPhone(rs.getString("phone"));
+                dto.setLikeCount(rs.getInt("like_count")); // DTO에 likeCount 필드 추가 필요
+
+                list.add(dto);
+            }
+        }
+
+        return list;
+    }
+
 }
