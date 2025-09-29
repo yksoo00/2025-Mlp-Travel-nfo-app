@@ -7,6 +7,7 @@ import com.multi.travelapp.model.dto.ReviewDto;
 import com.multi.travelapp.model.dto.TouristSpotDto;
 import com.multi.travelapp.model.dto.SignInDto;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static java.lang.System.exit;
@@ -20,7 +21,6 @@ public class TravelView {
     private MemberController memberController = new MemberController();
     private ReviewController reviewController = new ReviewController();
     private TouristSpotController touristSpotController = new TouristSpotController();
-
 
     public void firstPage() {
         while (true) {
@@ -217,7 +217,8 @@ public class TravelView {
                 case 1:
                     System.out.print("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine()); // 사용자가 touristSpotId 입력
-                    detailPage(memberId, touristSpotId);
+                    ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
+                    detailPage(memberId, touristSpotId,list);
 
                     break;
                 case 9:
@@ -250,7 +251,8 @@ public class TravelView {
                 case 2:
                     System.out.println("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine());
-                    detailPage(memberId, touristSpotId);
+                    ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
+                    detailPage(memberId, touristSpotId,list);
                     break;
                 case 9:
                     return;
@@ -284,7 +286,8 @@ public class TravelView {
                 case 2:
                     System.out.println("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine());
-                    detailPage(memberId, touristSpotId);
+                    ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
+                    detailPage(memberId, touristSpotId,list);
                     break;
                 case 9:
                     return;
@@ -313,7 +316,8 @@ public class TravelView {
                 case 2:
                     System.out.print("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine());
-                    detailPage(memberId, touristSpotId);
+                    ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
+                    detailPage(memberId, touristSpotId,list);
                     break;
                 case 9:
                     return;
@@ -325,11 +329,23 @@ public class TravelView {
     }
 
     // 상세 정보 보기 화면
-    public void detailPage(Long memberId, Long touristSpotId) {
+    public void detailPage(Long memberId, Long touristSpotId,ArrayList<TouristSpotDto> list) {
         while(true){
             System.out.println();
             System.out.println("---{관광지 id : " + touristSpotId + "}의 상세 정보 보기 화면---"); // 상세페이지에서 관광지id볼 수 있도록 수정
-            //travelController.selectTouristSpotById(memberId, touristSpotId); // 관광지 정보 출력
+            //touristSpotController.selectTouristSpotById(memberId, touristSpotId); // 관광지 정보 출력
+
+            for(TouristSpotDto m : list) {
+
+                System.out.println("권역: "+ m.getDistrict());
+                System.out.println("제목: "+ m.getTitle());
+                System.out.println("설명: "+ m.getDescription());
+                System.out.println("주소: "+ m.getAddress());
+                System.out.println("전화번호: "+ m.getPhone());
+            }
+
+            System.out.println("-------------------------------------");
+
             reviewController.selectAllReviewByTouristSpotId(memberId, touristSpotId); // 리뷰 출력
 
             System.out.println("1. 리뷰 등록");
@@ -491,11 +507,15 @@ public class TravelView {
     }
 
     public void displayRegionTitle(ArrayList<TouristSpotDto> list) {
-        System.out.println("\n===== 관광지 상세 정보 =====");
+        System.out.println("\n----- 관광지 제목 조회 결과 -----");
         for (TouristSpotDto m : list) {
 
-            System.out.println(m);
+            System.out.println(m.getDistrict());
+            System.out.println(m.getTitle());
+            System.out.println(m.getDescription());
+
         }
 
     }
+
 }
