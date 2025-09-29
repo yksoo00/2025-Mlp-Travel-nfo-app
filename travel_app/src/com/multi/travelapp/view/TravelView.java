@@ -34,11 +34,12 @@ public class TravelView {
             switch (input) {
                 case 1:
                     signInPage(); // 로그인 화면
-                    //customerMainPage(1L); // 테스트 코드
                     break;
                 case 2:
                     signUpPage(); // 회원가입 화면
-                    //detailPage(1L, 5L); // 테스트 코드
+                    //customerMainPage(1L); // 테스트 코드
+                    break;
+
                     break;
                 case 9:
                     exit(0);
@@ -258,21 +259,7 @@ public class TravelView {
         }
     }
 
-    // 소도시 목록 출력
-//    private void showSmallRegionList() {
-//        ArrayList<String> smallRegions = TouristSpotController.getSmallRegionList();
-//
-//        if (smallRegions == null || smallRegions.isEmpty()) {
-//            System.out.println("조회된 결과가 없습니다.");
-//            return;
-//        }
-//
-//        System.out.println("\n==== 소도시 목록 ====");
-//        for (String region : smallRegions) {
-//            System.out.print(region + " ");
-//        }
-//        System.out.println("\n===================");
-//    }
+
 
     // 권역별 관광지 조회
     public void byRegionTouristSpotPage(Long memberId){
