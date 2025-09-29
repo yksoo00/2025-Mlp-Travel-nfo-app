@@ -395,7 +395,7 @@ public class TravelView {
                 case "3": // 즐겨찾기 등록/삭제
                     System.out.print("즐겨찾기 등록/삭제할 관광지의 ID를 입력하세요 : ");
                     touristSpotId = Long.parseLong(sc.nextLine());
-                    //travelController.updateBookMark(memberId, touristSpotId);
+                    bookMarkController.updateBookMark(memberId, touristSpotId);
                     break;
                 case "4": // 좋아요 등록/삭제
                     System.out.print("좋아요 등록/삭제할 관광지의 ID를 입력하세요 : ");
