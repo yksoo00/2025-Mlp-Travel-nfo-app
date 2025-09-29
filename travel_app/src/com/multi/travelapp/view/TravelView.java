@@ -6,6 +6,7 @@ import com.multi.travelapp.model.dto.MemberDto;
 import com.multi.travelapp.model.dto.ReviewDto;
 import com.multi.travelapp.model.dto.TouristSpotDto;
 import com.multi.travelapp.model.dto.SignInDto;
+import com.multi.travelapp.service.LikesService;
 
 import java.lang.reflect.Array;
 import java.util.*;
@@ -21,6 +22,11 @@ public class TravelView {
     private MemberController memberController = new MemberController();
     private ReviewController reviewController = new ReviewController();
     private TouristSpotController touristSpotController = new TouristSpotController();
+
+
+    public TravelView() {
+        this.likesController = new LikesController(this);
+    }
 
     public void firstPage() {
         while (true) {
@@ -330,6 +336,8 @@ public class TravelView {
 
     // 상세 정보 보기 화면
     public void detailPage(Long memberId, Long touristSpotId,ArrayList<TouristSpotDto> list) {
+        LikesService likesService = new LikesService();
+
         while(true){
             System.out.println();
             System.out.println("---{관광지 id : " + touristSpotId + "}의 상세 정보 보기 화면---"); // 상세페이지에서 관광지id볼 수 있도록 수정
@@ -343,6 +351,11 @@ public class TravelView {
                 System.out.println("주소: "+ m.getAddress());
                 System.out.println("전화번호: "+ m.getPhone());
             }
+
+            // 좋아요 개수 조회 및 출력
+            int likeCount = likesService.getLikeCount(touristSpotId);
+            System.out.println("❤️ 좋아요 수: " + likeCount);
+
 
             System.out.println("-------------------------------------");
 
@@ -387,7 +400,8 @@ public class TravelView {
                 case "4": // 좋아요 등록/삭제
                     System.out.print("좋아요 등록/삭제할 관광지의 ID를 입력하세요 : ");
                     touristSpotId = Long.parseLong(sc.nextLine());
-                    //travelController.updateLikes(memberId, touristSpotId);
+
+                    likesController.updateLikes(memberId, touristSpotId);
                     break;
                 case "9": // 이전 화면으로
                     return;
@@ -518,4 +532,12 @@ public class TravelView {
 
     }
 
+    public void displayMessage(String msg) {
+        System.out.println(msg);
+    }
+
+
+    public void displayLikesCount(Long touristSpotId, int totalLikes) {
+        System.out.println("관광지 ID [" + touristSpotId + "]의 현재 좋아요 수: " + totalLikes);
+    }
 }

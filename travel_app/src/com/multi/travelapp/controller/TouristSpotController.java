@@ -73,5 +73,6 @@ public class TouristSpotController {
 
 
     }
+
 }
 
