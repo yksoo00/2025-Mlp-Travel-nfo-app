@@ -39,8 +39,6 @@ public class TravelView {
                     signUpPage(); // 회원가입 화면
                     //customerMainPage(1L); // 테스트 코드
                     break;
-
-                    break;
                 case 9:
                     exit(0);
                     break;
@@ -70,7 +68,12 @@ public class TravelView {
                     String password = sc.nextLine();
 
                     SignInDto signInDto = new SignInDto(email, password);
-                    memberController.signIn(signInDto); // 로그인
+                    if(memberController.signIn(signInDto)>0){
+                        customerMainPage(1L);
+                    } // 로그인
+                    else return;
+
+
                     break;
                 case 9:
                     return;
