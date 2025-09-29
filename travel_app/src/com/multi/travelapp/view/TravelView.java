@@ -23,106 +23,106 @@ public class TravelView {
 
 
     public void firstPage() {
-        while (true) {
-            System.out.println();
-            System.out.println("---로그인/회원가입 화면---");
-            System.out.println("1. 로그인");
-            System.out.println("2. 회원가입");
-            System.out.println("9. Travel App 종료");
-            System.out.print("입력 : ");
-            int input = Integer.parseInt(sc.nextLine());
-            switch (input) {
-                case 1:
-                    signInPage(); // 로그인 화면
-                    break;
-                case 2:
-                    signUpPage(); // 회원가입 화면
-                    break;
-                case 9:
-                    exit(0);
-                    break;
-                default:
-                    System.out.println("올바른 값을 입력해주세요");
-                    break;
-            }
-        }
+//        while (true) {
+//            System.out.println();
+//            System.out.println("---로그인/회원가입 화면---");
+//            System.out.println("1. 로그인");
+//            System.out.println("2. 회원가입");
+//            System.out.println("9. Travel App 종료");
+//            System.out.print("입력 : ");
+//            int input = Integer.parseInt(sc.nextLine());
+//            switch (input) {
+//                case 1:
+//                    signInPage(); // 로그인 화면
+//                    break;
+//                case 2:
+//                    signUpPage(); // 회원가입 화면
+//                    break;
+//                case 9:
+//                    exit(0);
+//                    break;
+//                default:
+//                    System.out.println("올바른 값을 입력해주세요");
+//                    break;
+//            }
+//        }
 
     }
 
     public void signInPage() {
-        while(true) {
-            System.out.println();
-            System.out.println("---로그인 화면---");
-            System.out.println("1. 로그인");
-            System.out.println("9. 로그인/회원가입 화면으로 이동");
-            System.out.print("입력 : ");
-            int input = Integer.parseInt(sc.nextLine());
-
-            switch (input){
-                case 1:
-                    System.out.print("이메일 입력 : "); // 이메일 입력
-                    String email = sc.nextLine();
-
-                    System.out.print("비밀번호 입력 : "); // 비밀번호 입력
-                    String password = sc.nextLine();
-
-                    //SignInDto signInDto = new SignInDto(email, password);
-                    //travelController.signIn(signInDto); // 로그인
-                    break;
-                case 9:
-                    return;
-                default:
-                    System.out.println("올바른 값을 입력해주세요");
-                    break;
-            }
-
-
-        }
+//        while(true) {
+//            System.out.println();
+//            System.out.println("---로그인 화면---");
+//            System.out.println("1. 로그인");
+//            System.out.println("9. 로그인/회원가입 화면으로 이동");
+//            System.out.print("입력 : ");
+//            int input = Integer.parseInt(sc.nextLine());
+//
+//            switch (input){
+//                case 1:
+//                    System.out.print("이메일 입력 : "); // 이메일 입력
+//                    String email = sc.nextLine();
+//
+//                    System.out.print("비밀번호 입력 : "); // 비밀번호 입력
+//                    String password = sc.nextLine();
+//
+//                    //SignInDto signInDto = new SignInDto(email, password);
+//                    //travelController.signIn(signInDto); // 로그인
+//                    break;
+//                case 9:
+//                    return;
+//                default:
+//                    System.out.println("올바른 값을 입력해주세요");
+//                    break;
+//            }
+//
+//
+//        }
     }
 
     public void signUpPage() {
-        while(true) {
-            System.out.println();
-            System.out.println("---회원가입 화면---");
-            System.out.println("1. 회원가입");
-            System.out.println("9. 로그인/회원가입 화면으로 이동");
-            System.out.print("입력 : ");
-            String input = sc.nextLine();
-
-            switch (input){
-                case "1":
-                    System.out.print("이름 입력 : ");
-                    String name = sc.nextLine();
-                    System.out.print("이메일 입력 : ");
-                    String email = sc.nextLine();
-                    System.out.print("비밀번호 입력 : ");
-                    String password = sc.nextLine();
-                    System.out.print("휴대폰 번호 : ");
-                    String phone = sc.nextLine();
-                    System.out.print("주소 입력 : ");
-                    String address = sc.nextLine();
-
-                    MemberDto memberDto = new MemberDto();
-                    //memberDto.setName(name);
-                    //memberDto.setEmail(email);
-                    //memberDto.setPassword(password);
-                    //memberDto.setPhone(phone);
-                    //memberDto.setAddress(address);
-
-                    //boolean result = travelController.signUp(memberDto);
-//                    if(result){
-//                        System.out.println("로그인/회원가입 화면으로 이동");
-//                        return;
-//                    }
-
-                    break;
-                case "9":
-                    return;
-                default:
-                    System.out.println("올바른 값을 입력하세요");
-                    break;
-            }
-        }
+//        while(true) {
+//            System.out.println();
+//            System.out.println("---회원가입 화면---");
+//            System.out.println("1. 회원가입");
+//            System.out.println("9. 로그인/회원가입 화면으로 이동");
+//            System.out.print("입력 : ");
+//            String input = sc.nextLine();
+//
+//            switch (input){
+//                case "1":
+//                    System.out.print("이름 입력 : ");
+//                    String name = sc.nextLine();
+//                    System.out.print("이메일 입력 : ");
+//                    String email = sc.nextLine();
+//                    System.out.print("비밀번호 입력 : ");
+//                    String password = sc.nextLine();
+//                    System.out.print("휴대폰 번호 : ");
+//                    String phone = sc.nextLine();
+//                    System.out.print("주소 입력 : ");
+//                    String address = sc.nextLine();
+//
+//                    MemberDto memberDto = new MemberDto();
+//                    //memberDto.setName(name);
+//                    //memberDto.setEmail(email);
+//                    //memberDto.setPassword(password);
+//                    //memberDto.setPhone(phone);
+//                    //memberDto.setAddress(address);
+//
+//                    //boolean result = travelController.signUp(memberDto);
+////                    if(result){
+////                        System.out.println("로그인/회원가입 화면으로 이동");
+////                        return;
+////                    }
+//
+//                    break;
+//                case "9":
+//                    return;
+//                default:
+//                    System.out.println("올바른 값을 입력하세요");
+//                    break;
+//            }
+//        }
     }
 
 
@@ -236,8 +236,9 @@ public class TravelView {
             switch (input){
                 case 1:
                     System.out.print("관광지 제목 입력 : ");
+
                     String title = sc.nextLine();
-                    //travelController.selectTouristSpotByTitle(memberId, title);
+                    touristSpotController.selectTouristSpotByTitle(memberId, title);
                     break;
                 case 2:
                     System.out.println("(상세 정보 보기) 관광지 ID 입력 : ");
@@ -254,6 +255,22 @@ public class TravelView {
         }
     }
 
+    // 소도시 목록 출력
+//    private void showSmallRegionList() {
+//        ArrayList<String> smallRegions = TouristSpotController.getSmallRegionList();
+//
+//        if (smallRegions == null || smallRegions.isEmpty()) {
+//            System.out.println("조회된 결과가 없습니다.");
+//            return;
+//        }
+//
+//        System.out.println("\n==== 소도시 목록 ====");
+//        for (String region : smallRegions) {
+//            System.out.print(region + " ");
+//        }
+//        System.out.println("\n===================");
+//    }
+
     // 권역별 관광지 조회
     public void byRegionTouristSpotPage(Long memberId){
         while(true){
@@ -269,7 +286,7 @@ public class TravelView {
                 case 1:
                     System.out.print("관광지 권역 입력 : ");
                     String district = sc.nextLine();
-                    //travelController.selectTouristSpotByDistrict(memberId, district);
+                    touristSpotController.selectTouristSpotByDistrict(memberId, district);
                     break;
                 case 2:
                     System.out.println("(상세 정보 보기) 관광지 ID 입력 : ");
@@ -470,4 +487,22 @@ public class TravelView {
     }
 
 
+    public void displayRegionPlace(ArrayList<TouristSpotDto> list) {
+        System.out.println("\n조회된 정보는 다음과 같습니다.");
+        System.out.println("----------------------------------------------------------");
+
+        for (TouristSpotDto m : list) {
+
+            System.out.println(m.getTitle());
+        }
+    }
+
+    public void displayRegionTitle(ArrayList<TouristSpotDto> list) {
+        System.out.println("\n===== 관광지 상세 정보 =====");
+        for (TouristSpotDto m : list) {
+
+            System.out.println(m);
+        }
+
+    }
 }
