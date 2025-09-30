@@ -67,7 +67,13 @@ public class ReviewService {
         int result;
         try {
             conn = dbcp.getConnection();
+            conn.setAutoCommit(false); // 오토커밋 false
             result = reviewDao.insertReview(conn, memberId, reviewDto);
+            if (result > 0) {
+                conn.commit();
+            } else {
+                conn.rollback();
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -85,7 +91,13 @@ public class ReviewService {
         int result;
         try {
             conn = dbcp.getConnection();
+            conn.setAutoCommit(false); // 오토커밋 false
             result = reviewDao.deleteReview(conn, memberId, reviewId);
+            if (result > 0) {
+                conn.commit();
+            } else {
+                conn.rollback();
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -102,7 +114,13 @@ public class ReviewService {
         int result;
         try {
             conn = dbcp.getConnection();
+            conn.setAutoCommit(false); // 오토커밋 false
             result = reviewDao.updateReview(conn, reviewId, title, description, score);
+            if (result > 0) {
+                conn.commit();
+            } else {
+                conn.rollback();
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

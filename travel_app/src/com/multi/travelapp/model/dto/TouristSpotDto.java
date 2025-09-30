@@ -1,8 +1,8 @@
 package com.multi.travelapp.model.dto;
 
 public class TouristSpotDto {
+  
     private Long tourist_spot_id;
-    private String tourist_spot_name;
     private String district;
     private String title;
     private String description;
@@ -25,52 +25,72 @@ public class TouristSpotDto {
 
     public void setTouristSpotId(Long tourist_spot_id) {
         this.tourist_spot_id = tourist_spot_id;
+      
+    public TouristSpotDto() {
+
     }
 
-    public String getDistrict() {
-        return district;
+    public void setTourist_spot_id(Long tourist_spot_id) {
+        this.tourist_spot_id = tourist_spot_id;
     }
 
     public void setDistrict(String district) {
         this.district = district;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public String getPhone() {
-        return phone;
     }
 
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    public Long getTourist_spot_id() {
+        return tourist_spot_id;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public TouristSpotDto(String district, String title, String description, String address,
+                          String phone) {
+        this.district = district;
+        this.title = title;
+        this.description = description;
+        this.address = address;
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
         return "TouristSpotDto{" +
-                "tourist_spot_it=" + tourist_spot_id +
+                "tourist_spot_id=" + tourist_spot_id +
                 ", district='" + district + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
@@ -79,3 +99,4 @@ public class TouristSpotDto {
                 '}';
     }
 }
+
