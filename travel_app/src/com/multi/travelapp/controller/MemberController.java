@@ -22,18 +22,14 @@ public class MemberController {
         return result; // View로 반환
     }
 
-    public int signIn(SignInDto signInDto) {
+    public MemberDto signIn(SignInDto signInDto) {
         MemberDto memberDto = memberService.signIn(signInDto);
-        // 수정함
-        int result = 0;
         TravelView travelView = new TravelView();
 
         try {
         if (memberDto != null) {
             System.out.println("로그인 성공" + signInDto.getEmail());
-            // 수정함
-            travelView.customerMainPage(memberDto.getMemberId());
-            result=1;
+
         }else {
             System.out.println("로그인 실패");
                 }
@@ -41,7 +37,7 @@ public class MemberController {
             e.printStackTrace();
         }
 
-        return result;
+        return memberDto;
 
     }
 }
