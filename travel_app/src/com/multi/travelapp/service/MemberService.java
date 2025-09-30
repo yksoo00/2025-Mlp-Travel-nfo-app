@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import static java.sql.DriverManager.getConnection;
 
 public class MemberService {
-    private final TouristSpotDao touristSpotDao;
+
     private MemberDao memberDao = new MemberDao();
     private DBConnectionMgr dbcp;
       
@@ -28,47 +28,12 @@ public class MemberService {
             }
         }
 
-        this.touristSpotDao = new TouristSpotDao();
+
     }
   
-  public ArrayList<TouristSpotDto> selectTourSpotsByRegion(String region) {
-    ArrayList<TouristSpotDto> list = new ArrayList<>();
-    Connection conn = null;
-
-    try {
-        conn = dbcp.getConnection();
-        list = touristSpotDao.selectTourSpotsByRegion(conn, region);
-    } catch (Exception e) {
-        throw new RuntimeException("지역별 관광지 조회 실패", e);
-    } finally {
-        if (conn != null) {
-            dbcp.freeConnection(conn);
-        }
-    }
-
-    return list;
-}
 
 
 
-public ArrayList<TouristSpotDto> selectTourSpotsByTitle(String title) {
-    ArrayList<TouristSpotDto> list = new ArrayList<>();
-    Connection conn = null;
-
-    try {
-        conn = dbcp.getConnection();
-        list = touristSpotDao.selectTourSpotsByTitle(conn, title);
-    } catch (Exception e) {
-        throw new RuntimeException("제목x별 관광지 조회 실패", e);
-    } finally {
-        if (conn != null) {
-            dbcp.freeConnection(conn);
-        }
-    }
-
-    return list;
-}
-  
   public boolean signUp(MemberDto memberDto) {
     boolean result = false;
     Connection conn = null;

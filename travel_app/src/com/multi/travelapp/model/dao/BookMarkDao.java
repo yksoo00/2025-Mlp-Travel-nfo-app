@@ -1,15 +1,80 @@
 package com.multi.travelapp.model.dao;
 
+import com.multi.travelapp.common.DBConnectionMgr;
 import com.multi.travelapp.model.dto.TouristSpotDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.sql.SQLException;
+
+import java.util.List;
 
 public class BookMarkDao {
+  
+    // 즐겨찾기 존재 여부
+    public boolean existsFavorite(Connection conn, Long memberId, Long touristSpotId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM bookmark WHERE member_id = ? AND tourist_spot_id = ?";
 
-    public ArrayList<TouristSpotDto> selectAllBookMarkByMemberId(Connection conn, Long memberId) throws Exception {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, memberId);
+            pstmt.setLong(2, touristSpotId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
+            }
+        }
+
+    }
+
+    // 즐겨찾기 등록
+    public int insertFavorite(Connection conn, Long memberId, Long touristSpotId){
+        int result;
+        PreparedStatement pstmt=null;
+        String sql = "INSERT INTO bookmark (member_id, tourist_spot_id) VALUES (?, ?)";
+
+        try {
+            pstmt=conn.prepareStatement(sql);
+            pstmt.setLong(1, memberId);
+            pstmt.setLong(2, touristSpotId);
+
+            result=pstmt.executeUpdate();
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }finally {
+            DBConnectionMgr dbcp=DBConnectionMgr.getInstance();
+            dbcp.freeConnection(pstmt);
+        }
+
+        return result;
+    }
+
+
+    // 즐겨찾기 삭제
+    public int deleteFavorite(Connection conn, Long memberId, Long touristSpotId) throws SQLException {
+        int result;
+
+        String sql = "DELETE FROM bookmark WHERE member_id = ? AND tourist_spot_id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, memberId);
+            pstmt.setLong(2, touristSpotId);
+            result=pstmt.executeUpdate();
+        }
+
+        return result;
+    }
+
+    // 특정 관광지의 즐겨찾기 수
+    public int countFavoritesByTouristSpotId(Connection conn, Long touristSpotId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM bookmark WHERE tourist_spot_id = ?";
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, touristSpotId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next() ? rs.getInt(1) : 0;
+            }
+        }
+    }
+      public ArrayList<TouristSpotDto> selectAllBookMarkByMemberId(Connection conn, Long memberId) {
         ArrayList<TouristSpotDto> list = new ArrayList<>();
 
         String sql = "SELECT a.*\n" +
@@ -19,16 +84,11 @@ public class BookMarkDao {
                 "WHERE b.member_id = ?";
 
 
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setLong(1, memberId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    TouristSpotDto dto = new TouristSpotDto();
+ 
                     dto.setTourist_spot_id(rs.getLong("tourist_spot_id"));
                     dto.setTitle(rs.getString("title"));
                     dto.setDistrict(rs.getString("district"));
                     dto.setAddress(rs.getString("address"));
-                    dto.setDescription(rs.getString("description"));
                     dto.setPhone(rs.getString("phone"));
                     list.add(dto);
                 }
@@ -36,6 +96,8 @@ public class BookMarkDao {
         }
         return list;
     }
+
+
 }
 
 

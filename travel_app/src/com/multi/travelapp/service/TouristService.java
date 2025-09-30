@@ -1,6 +1,5 @@
 package com.multi.travelapp.service;
 
-
 import com.multi.travelapp.common.DBConnectionMgr;
 import com.multi.travelapp.model.dao.TouristSpotDao;
 import com.multi.travelapp.model.dto.TouristSpotDto;
@@ -10,102 +9,166 @@ import java.util.ArrayList;
 
 
 public class TouristService {
-    private final TouristSpotDao touristSpotDao;
-    DBConnectionMgr dbcp = null;
-    Connection conn = null;
 
-    public TouristService(){
+    private final TouristSpotDao touristSpotDao;
+    Connection conn=null;
+    DBConnectionMgr dbcp=null;
+
+    public TouristService() {
         dbcp = DBConnectionMgr.getInstance();
-        if(dbcp.getConnectionCount() == 0){
-            try{
+
+        if (dbcp.getConnectionCount() == 0) {
+            try {
                 dbcp.setInitOpenConnections(10);
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         }
+
         touristSpotDao = new TouristSpotDao();
     }
 
-    public int insertTourist(TouristSpotDto touristSpotDto) {
-        int result = 0;
+    //장소 아이디로 상세정보 조회
+    public ArrayList<TouristSpotDto> selectTouristSpotById(Long memberId, Long touristSpotId) {
+        ArrayList<TouristSpotDto> list;
+        Connection conn = null;
+
         try {
             conn = dbcp.getConnection();
-
-            result = touristSpotDao.insertTourist(conn,touristSpotDto);
-            conn.setAutoCommit(false);
-            if (result > 0) {
-                conn.commit();
-            } else {
-                conn.rollback();
-            }
+            list = touristSpotDao.selectTourSpotsById(conn, memberId, touristSpotId);
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        }finally {
-            if(conn!=null){
+            throw new RuntimeException("상세정보 조회 실패", e);
+        } finally {
+            if (conn != null) {
+                istSpotDao = new TouristSpotDao();
                 dbcp.freeConnection(conn);
             }
+
+        }
+        return list;
+    }
+        public int insertTourist(TouristSpotDto touristSpotDto) {
+            int result = 0;
+            try {
+                conn = dbcp.getConnection();
+
+                result = touristSpotDao.insertTourist(conn,touristSpotDto);
+                conn.setAutoCommit(false);
+                if (result > 0) {
+                    conn.commit();
+                } else {
+                    conn.rollback();
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }finally {
+                if(conn!=null){
+
+                    dbcp.freeConnection(conn);
+                }
+            }
+            return result;
+
+
         }
 
-    return result;
-    }
+        //제목별 장소조회
+        public ArrayList<TouristSpotDto> selectTourSpotsByTitle(String title) {
+            ArrayList<TouristSpotDto> list;
+            Connection conn = null;
 
-    public ArrayList<TouristSpotDto> selectTourist() {
-        ArrayList<TouristSpotDto>  touristSpots;
-        try {
-            conn = dbcp.getConnection();
-
-            touristSpots = touristSpotDao.selectTourist(conn);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }finally {
-            if(conn!=null){
-                dbcp.freeConnection(conn);
+            try {
+                conn = dbcp.getConnection();
+                list = touristSpotDao.selectTourSpotsByTitle(conn, title);
+            } catch (Exception e) {
+                throw new RuntimeException("제목별 관광지 조회 실패", e);
+            } finally {
+                if (conn != null) {
+                    dbcp.freeConnection(conn);
+                }
             }
+            return list;
         }
 
-        return touristSpots;
-    }
+        public ArrayList<TouristSpotDto> selectTourist() {
+            ArrayList<TouristSpotDto>  touristSpots;
+                try {
+                    conn = dbcp.getConnection();
 
-    public int deleteTourist(Long tourist_spot_id) {
-        int result = 0;
-        try {
-            conn = dbcp.getConnection();
-            result = touristSpotDao.deleteTourist(conn,tourist_spot_id);
-            conn.setAutoCommit(false);
-            if (result > 0) {
-                conn.commit();
-            } else {
-                conn.rollback();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }finally {
-            if(conn!=null){
-                dbcp.freeConnection(conn);
-            }
-        }
-        return result;
+                    touristSpots = touristSpotDao.selectTourist(conn);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }finally {
+                        if(conn!=null){
+                            dbcp.freeConnection(conn);
+                        }
+                    }
 
-    }
 
-    public int UpdateTourist(Long tourist_spot_id, TouristSpotDto touristSpotDto) {
-        int result = 0;
-        try {
-            conn = dbcp.getConnection();
-            result = touristSpotDao.updateTourist(conn,touristSpotDto,tourist_spot_id);
-            conn.setAutoCommit(false);
-            if (result > 0) {
-                conn.commit();
-            } else {
-                conn.rollback();
+                    return touristSpots;
+                }
+
+                //권역별 관광지 조회
+                public ArrayList<TouristSpotDto> selectTourSpotsByRegion(String district) {
+                    ArrayList<TouristSpotDto> list;
+                    Connection conn = null;
+
+                    try {
+                        conn = dbcp.getConnection();
+                        list = touristSpotDao.selectTourSpotsByRegion(conn, district);
+                    } catch (Exception e) {
+                        throw new RuntimeException("권역별 관광지 조회 실패", e);
+                    } finally {
+                        if (conn != null) {
+                            dbcp.freeConnection(conn);
+                        }
+                    }
+
+                    return list;
+
+                }
+
+
+            public int deleteTourist(Long tourist_spot_id) {
+                int result = 0;
+                try {
+                    conn = dbcp.getConnection();
+                    result = touristSpotDao.deleteTourist(conn,tourist_spot_id);
+                    conn.setAutoCommit(false);
+                    if (result > 0) {
+                        conn.commit();
+                    } else {
+                        conn.rollback();
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }finally {
+                    if(conn!=null){
+                        dbcp.freeConnection(conn);
+                    }
+                }
+                return result;
+
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }finally {
-            if(conn!=null){
-                dbcp.freeConnection(conn);
+
+            public int UpdateTourist(Long tourist_spot_id, TouristSpotDto touristSpotDto) {
+                int result = 0;
+                try {
+                    conn = dbcp.getConnection();
+                    result = touristSpotDao.updateTourist(conn,touristSpotDto,tourist_spot_id);
+                    conn.setAutoCommit(false);
+                    if (result > 0) {
+                        conn.commit();
+                    } else {
+                        conn.rollback();
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }finally {
+                    if(conn!=null){
+                        dbcp.freeConnection(conn);
+                    }
+                }
+                return result;
             }
-        }
-        return result;
-    }
 }
