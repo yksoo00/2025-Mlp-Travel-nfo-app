@@ -83,19 +83,32 @@ public class BookMarkDao {
                 "    ON a.tourist_spot_id = b.tourist_spot_id\n" +
                 "WHERE b.member_id = ?";
 
+          try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+              pstmt.setLong(1, memberId);
+              try (ResultSet rs = pstmt.executeQuery()) {
+                  while (rs.next()) {
+                      TouristSpotDto dto = new TouristSpotDto();
+                      dto.setTourist_spot_id(rs.getLong("tourist_spot_id"));
+                      dto.setTitle(rs.getString("title"));
+                      dto.setDistrict(rs.getString("district"));
+                      dto.setAddress(rs.getString("address"));
+                      dto.setDescription(rs.getString("description"));
+                      dto.setPhone(rs.getString("phone"));
+                      list.add(dto);
+                  }
+              }
+          } catch (SQLException e) {
+              throw new RuntimeException(e);
+          }
+          return list;
 
- 
-                    dto.setTourist_spot_id(rs.getLong("tourist_spot_id"));
-                    dto.setTitle(rs.getString("title"));
-                    dto.setDistrict(rs.getString("district"));
-                    dto.setAddress(rs.getString("address"));
-                    dto.setPhone(rs.getString("phone"));
-                    list.add(dto);
-                }
-            }
-        }
-        return list;
-    }
+
+
+
+
+
+
+      }
 
 
 }

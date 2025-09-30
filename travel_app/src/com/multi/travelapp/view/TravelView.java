@@ -9,7 +9,6 @@ import com.multi.travelapp.model.dto.TouristSpotDto;
 import com.multi.travelapp.model.dto.SignInDto;
 import com.multi.travelapp.service.LikesService;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 import static java.lang.System.exit;
@@ -37,7 +36,6 @@ public class TravelView {
             System.out.println("---로그인/회원가입 화면---");
             System.out.println("1. 로그인");
             System.out.println("2. 회원가입");
-            System.out.println("3. 관리자");
             System.out.println("9. Travel App 종료");
             System.out.print("입력 : ");
             int input = Integer.parseInt(sc.nextLine());
@@ -47,9 +45,6 @@ public class TravelView {
                     break;
                 case 2:
                     signUpPage(); // 회원가입 화면
-                    break;
-                case 3:
-                    adminPage();
                     break;
                 case 9:
                     exit(0);
@@ -86,6 +81,10 @@ public class TravelView {
                     if(memberDto!=null){
                         Session.login(memberDto);
                         System.out.println("세션 아이디 : " +Session.getCurrentMemberId());
+                        isAdmin(memberDto);
+                        if(Session.getIsAdmin()){
+                            adminPage();
+                        }
                         customerMainPage();
                     } // 로그인
                     else return;
@@ -190,6 +189,7 @@ public class TravelView {
 
     public void touristSpotPage() {
         Long memberId = Session.getCurrentMemberId();
+        boolean isAdmin = Session.getIsAdmin();
         while(true){
             System.out.println();
             System.out.println("---관광지 조회 방법 선택 화면---");
@@ -197,7 +197,11 @@ public class TravelView {
             System.out.println("2. 관광지 제목으로 조회");
             System.out.println("3. 권역별 관광지 조회");
             System.out.println("4. 좋아요 순으로 조회");
-            System.out.println("9. 메인 화면으로 이동");
+            if (isAdmin){
+                System.out.println("9. 관리자 페이지로 이동");
+            }else {
+                System.out.println("9. 메인 화면으로 이동");
+            }
             System.out.print("입력 : ");
             int input = Integer.parseInt(sc.nextLine());
 
@@ -440,7 +444,7 @@ public class TravelView {
     public void adminPage(){
         while (true) {
             System.out.println();
-            System.out.println("---고객 메인 화면---");
+            System.out.println("---관리자 화면---");
             System.out.println("1. 관광지 조회 방법 선택");
             System.out.println("2. 관광지 등록");
             System.out.println("3. 관광지 수정");
@@ -464,7 +468,8 @@ public class TravelView {
                     break;
                 case 9:
                     Session.logout();
-                    return;
+                    firstPage();
+                    break;
                 default:
                     System.out.println("올바른 값을 입력하세요");
                     break;
@@ -661,10 +666,10 @@ public class TravelView {
 
             switch (input) {
                 case 1: // 상세 조회
-                    System.out.print("상세 조회할 즐겨찾기 장소의 ID 입력 : ");
-                    Long bookMarkId = Long.parseLong(sc.nextLine());
-                    bookMarkController.selectAllMyBookMarkPage(bookMarkId);
-                    detailPage(memberId,  bookMarkId);
+                    System.out.println("(상세 정보 보기) 관광지 ID 입력 : ");
+                    Long touristSpotId = Long.parseLong(sc.nextLine());
+                    ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
+                    detailPage(touristSpotId,list);
                     break;
                 case 9: // 메인 화면으로
                     return;
@@ -711,5 +716,12 @@ public class TravelView {
                 System.out.println(spot); // toString() 호출
             }
         }
+    }
+
+    public void isAdmin(MemberDto memberDto){
+        if (memberDto.getEmail().startsWith("admin")) {
+                Session.setIsAdminTrue();
+        }
+
     }
 }

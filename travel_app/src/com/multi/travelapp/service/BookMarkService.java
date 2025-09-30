@@ -10,10 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class BookMarkService {
-    private final BookMarkDao bookMarkDao = new BookMarkDao();
-    private final DBConnectionMgr dbcp = DBConnectionMgr.getInstance();
-    Connection conn = null;
+    private BookMarkDao bookMarkDao = new BookMarkDao();
     DBConnectionMgr dbcp = null;
+    Connection conn = null;
 
     public BookMarkService() {
         dbcp = DBConnectionMgr.getInstance();
