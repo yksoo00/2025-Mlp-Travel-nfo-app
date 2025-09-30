@@ -88,5 +88,26 @@ public class TouristSpotController {
 
     }
 
+
+    // page로 관광지 조회
+    public void selectAllTouristSpotByPage(int page) {
+        TravelView travelView = new TravelView();
+
+        try {
+            ArrayList<TouristSpotDto> list = memberService.selectAllTouristSpotByPage(page);
+
+            if (!list.isEmpty()) {
+                travelView.displayTouristSpotList(list);
+            } else {
+                travelView.displayNoData();
+            }
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 }
 

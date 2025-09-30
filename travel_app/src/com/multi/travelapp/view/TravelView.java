@@ -209,20 +209,25 @@ public class TravelView {
     public void allTouristSpotPage(Long memberId){
         while(true) {
             System.out.println();
-            System.out.println("---관광지 전체 조회(페이지별) 화면---");
-            //travelController.selectAllTouristSpot(memberId); // 모든 관광지 조회
+            System.out.println("---관광지 전체 페이지별 조회 화면---");
 
-            System.out.println("1. 상세 정보 보기");
+            System.out.println("1. 페이지별 관광지 조회");
+            System.out.println("2. 상세 정보 보기");
             System.out.println("9. 관광지 조회 방법 선택 화면으로 이동");
             System.out.print("입력 : ");
             int input = Integer.parseInt(sc.nextLine());
 
             switch (input){
                 case 1:
+                    System.out.print("조회할 페이지를 입력하세요 : ");
+                    int page = Integer.parseInt(sc.nextLine());
+                    touristSpotController.selectAllTouristSpotByPage((page - 1) * 10);
+
+                    break;
+                case 2:
                     System.out.print("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine()); // 사용자가 touristSpotId 입력
                     detailPage(memberId, touristSpotId);
-
                     break;
                 case 9:
                     return;

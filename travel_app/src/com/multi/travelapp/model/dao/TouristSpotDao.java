@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.multi.travelapp.common.DBConnectionMgr;
 import com.multi.travelapp.model.dto.TouristSpotDto;
 
 import java.sql.Connection;
@@ -17,6 +18,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import static com.multi.travelapp.common.DBConnectionMgr.getInstance;
 
 public class TouristSpotDao {
     public int insertTourist(Connection conn, TouristSpotDto touristSpotDto) {
@@ -176,4 +179,40 @@ public class TouristSpotDao {
 
         return list;
     }
+
+    // page로 관광지 조회
+    public ArrayList<TouristSpotDto> selectAllTouristSpotByPage(Connection conn, int page) {
+
+        ArrayList<TouristSpotDto> list = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        String sql = "select * from tourist_spot limit ?, 10";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, page);
+            rs = pstmt.executeQuery();
+
+            while(rs.next()){
+                TouristSpotDto touristSpotDto = new TouristSpotDto();
+                touristSpotDto.setId(rs.getInt("tourist_spot_id"));
+                touristSpotDto.setTitle(rs.getString("title"));
+                touristSpotDto.setDescription(rs.getString("description"));
+                touristSpotDto.setAddress(rs.getString("address"));
+                touristSpotDto.setPhone(rs.getString("phone"));
+                touristSpotDto.setDistrict(rs.getString("district"));
+
+                list.add(touristSpotDto);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBConnectionMgr dbcp = getInstance();
+            dbcp.freeConnection(pstmt, rs);
+        }
+
+        return list;
+
+    }
+
 }
