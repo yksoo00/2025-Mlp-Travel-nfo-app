@@ -82,7 +82,7 @@ public class LikesDao {
                 dto.setDescription(rs.getString("description"));
                 dto.setAddress(rs.getString("address"));
                 dto.setPhone(rs.getString("phone"));
-                dto.setLikeCount(rs.getInt("like_count")); // DTO에 likeCount 필드 추가 필요
+                dto.setLikeCount(rs.getInt("like_count"));
 
                 list.add(dto);
             }

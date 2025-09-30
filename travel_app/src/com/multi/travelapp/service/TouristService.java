@@ -30,7 +30,7 @@ public class TouristService {
 
     //장소 아이디로 상세정보 조회
     public ArrayList<TouristSpotDto> selectTouristSpotById(Long memberId, Long touristSpotId) {
-        ArrayList<TouristSpotDto> list = new ArrayList<>();
+        ArrayList<TouristSpotDto> list;
         Connection conn = null;
 
         try {
@@ -50,7 +50,7 @@ public class TouristService {
 
     //제목별 장소조회
     public ArrayList<TouristSpotDto> selectTourSpotsByTitle(String title) {
-        ArrayList<TouristSpotDto> list = new ArrayList<>();
+        ArrayList<TouristSpotDto> list;
         Connection conn = null;
 
         try {
@@ -69,7 +69,7 @@ public class TouristService {
 
     //권역별 관광지 조회
     public ArrayList<TouristSpotDto> selectTourSpotsByRegion(String district) {
-        ArrayList<TouristSpotDto> list = new ArrayList<>();
+        ArrayList<TouristSpotDto> list;
         Connection conn = null;
 
         try {

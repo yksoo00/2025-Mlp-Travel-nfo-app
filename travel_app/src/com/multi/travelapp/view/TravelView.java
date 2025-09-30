@@ -26,7 +26,9 @@ public class TravelView {
 
     public TravelView() {
         this.likesController = new LikesController(this);
+        this.bookMarkController = new BookMarkController();
     }
+
 
     public void firstPage() {
         while (true) {
@@ -159,7 +161,7 @@ public class TravelView {
                     myReviewPage(memberId); // 내 리뷰 화면
                     break;
                 case 3:
-                    //myBookMarkPage(member); // 즐겨찾기 화면
+                    bookMarkController.myBookMarkPage(memberId); // 즐겨찾기 화면
                     break;
                 case 9:
                     return; // 로그아웃 - 로그인 화면으로 이동
@@ -548,6 +550,17 @@ public class TravelView {
                     ", 제목: " + spot.getTitle() +
                     ", 권역: " + spot.getDistrict() +
                     ", 좋아요 수: " + spot.getLikeCount());
+        }
+    }
+
+    public void displayMyBookMarks(List<TouristSpotDto> favorites) {
+        System.out.println("\n------ 내가 즐겨찾기한 관광지 목록 ------");
+        if (favorites == null || favorites.isEmpty()) {
+            System.out.println("즐겨찾기한 관광지가 없습니다.");
+        } else {
+            for (TouristSpotDto spot : favorites) {
+                System.out.println(spot); // toString() 호출
+            }
         }
     }
 }
