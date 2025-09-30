@@ -1,34 +1,34 @@
 package com.multi.travelapp.model.dto;
 
 public class BookMarkDto {
-    private int bookmarkId;
-    private int memberId;
-    private int touristSpotId;
+    private long bookmarkId;
+    private long memberId;
+    private long touristSpotId;
 
     public BookMarkDto() {
     }
 
-    public int getBookmarkId() {
+    public long getBookmarkId() {
         return bookmarkId;
     }
 
-    public void setBookmarkId(int bookmarkId) {
+    public void setBookmarkId(long bookmarkId) {
         this.bookmarkId = bookmarkId;
     }
 
-    public int getMemberId() {
+    public long getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(int memberId) {
+    public void setMemberId(long memberId) {
         this.memberId = memberId;
     }
 
-    public int getTouristSpotId() {
+    public long getTouristSpotId() {
         return touristSpotId;
     }
 
-    public void setTouristSpotId(int touristSpotId) {
+    public void setTouristSpotId(long touristSpotId) {
         this.touristSpotId = touristSpotId;
     }
 
