@@ -26,62 +26,62 @@ public class Main {
             Statement stmt = conn.createStatement();
 
             String createSql = """
-                    CREATE TABLE IF NOT EXISTS tourist_spot (
-                        tourist_spot_id bigint primary key auto_increment,
-                        district VARCHAR(50),
-                        title VARCHAR(255),
-                        description TEXT,
-                        address VARCHAR(255),
-                        phone VARCHAR(255)
-                    );
+                                create table tourist_spot (
+                                tourist_spot_id bigint primary key auto_increment,
+                                district varchar(50) not null,
+                                title varchar(50) not null,
+                                description varchar(10000),
+                                address varchar(255),
+                                phone varchar(100)
+                            );
                     
                     """;
             String createMemberSql = """
-                     create table member (
-                        member_id bigint primary key auto_increment,
-                        name varchar(50) not null,
-                        email varchar(50) not null unique,
-                        password varchar(255) not null,
-                        phone varchar(20) not null unique,
-                        address varchar(255) not null
-                    );
+create table member (
+    member_id bigint primary key auto_increment,
+    name varchar(50) not null,
+    email varchar(50) not null unique,
+    password varchar(255) not null,
+    phone varchar(20) not null unique,
+    address varchar(255) not null
+);
                    
                     """;
             String createReviewSql = """
-                                        create table review (
-                        review_id bigint primary key auto_increment,
-                        title varchar(50) not null,
-                        description varchar(255),
-                        score int not null,
-                        member_id bigint,
-                        tourist_spot_id bigint,
-                        constraint fk_review_member foreign key (member_id) references member(member_id),
-                        constraint fk_review_tourist_spot foreign key (tourist_spot_id) references tourist_spot(tourist_spot_id)
-                    );
+create table review (
+    review_id bigint primary key auto_increment,
+    title varchar(50) not null,
+    description varchar(255),
+    score int not null,
+    member_id bigint not null,
+    tourist_spot_id bigint not null,
+    constraint fk_review_member foreign key (member_id) references member(member_id) on delete cascade,
+    constraint fk_review_tourist_spot foreign key (tourist_spot_id) references tourist_spot(tourist_spot_id) on delete cascade
+);
                     
 
                     """;
             String createBookSql = """
-                                        create table bookmark (
-                        bookmark_id bigint primary key auto_increment,
-                        member_id bigint,
-                        tourist_spot_id bigint,
-                        constraint fk_bookmark_member foreign key (member_id) references member(member_id),
-                        constraint fk_bookmark_tourist_spot foreign key (tourist_spot_id) references tourist_spot(tourist_spot_id),
-                        unique (member_id, tourist_spot_id) -- 중복 방지 제약 조건 추가
-                    );
+create table bookmark (
+    bookmark_id bigint primary key auto_increment,
+    member_id bigint not null,
+    tourist_spot_id bigint not null,
+    constraint fk_bookmark_member foreign key (member_id) references member(member_id) on delete cascade,
+    constraint fk_bookmark_tourist_spot foreign key (tourist_spot_id) references tourist_spot(tourist_spot_id) on delete cascade,
+    unique (member_id, tourist_spot_id) -- 중복 방지 제약 조건 추가
+);
                     
                  
                     """;
             String createLikeSql = """
-                     create table likes (
-                        likes_id bigint primary key auto_increment,
-                        member_id bigint,
-                        tourist_spot_id bigint,
-                        constraint fk_likes_member foreign key (member_id) references member(member_id),
-                        constraint fk_likes_tourist_spot foreign key (tourist_spot_id) references tourist_spot(tourist_spot_id),
-                        unique (member_id, tourist_spot_id) -- 중복 방지 제약 조건 추가
-                    );
+create table likes (
+    likes_id bigint primary key auto_increment,
+    member_id bigint not null,
+    tourist_spot_id bigint not null,
+    constraint fk_likes_member foreign key (member_id) references member(member_id) on delete cascade,
+    constraint fk_likes_tourist_spot foreign key (tourist_spot_id) references tourist_spot(tourist_spot_id) on delete cascade,
+    unique (member_id, tourist_spot_id) -- 중복 방지 제약 조건 추가
+);
                     """;
             stmt = conn.createStatement();
             stmt.executeUpdate(createSql);
