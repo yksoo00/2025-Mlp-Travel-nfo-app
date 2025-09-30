@@ -129,10 +129,10 @@ public class TouristSpotDao {
     }
   public ArrayList<TouristSpotDto> selectTourSpotsByRegion(Connection conn, String region) throws Exception {
         ArrayList<TouristSpotDto> list = new ArrayList<>();
-        String sql = "SELECT tourist_spot_id,title, district FROM tourist_spot WHERE district = ?";
+        String sql = "SELECT * FROM tourist_spot WHERE district like ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1,region);
+            pstmt.setString(1, "%" + region + "%");
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
@@ -140,6 +140,9 @@ public class TouristSpotDao {
                     dto.setTouristSpotId(rs.getLong("tourist_spot_id"));
                     dto.setTitle(rs.getString("title"));
                     dto.setDistrict(rs.getString("district"));
+                    dto.setDescription(rs.getString("description"));
+                    dto.setAddress(rs.getString("address"));
+                    dto.setPhone(rs.getString("phone"));
                     list.add(dto);
                 }
             }
@@ -154,10 +157,10 @@ public class TouristSpotDao {
 
     public ArrayList<TouristSpotDto> selectTourSpotsByTitle(Connection conn, String title) {
         ArrayList<TouristSpotDto> list = new ArrayList<>();
-        String sql = "SELECT * FROM tourist_spot WHERE title = ?";
+        String sql = "SELECT * FROM tourist_spot where title like ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1,title);
+            pstmt.setString(1, "%" + title + "%");
 
 
             try (ResultSet rs = pstmt.executeQuery()) {

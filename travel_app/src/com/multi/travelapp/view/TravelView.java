@@ -376,18 +376,18 @@ public class TravelView {
             System.out.println("---{관광지 id : " + touristSpotId + "}의 상세 정보 보기 화면---"); // 상세페이지에서 관광지id볼 수 있도록 수정
             //touristSpotController.selectTouristSpotById(memberId, touristSpotId); // 관광지 정보 출력
 
-            for(TouristSpotDto m : list) {
-
-                System.out.println("권역: "+ m.getDistrict());
-                System.out.println("제목: "+ m.getTitle());
-                System.out.println("설명: "+ m.getDescription());
-                System.out.println("주소: "+ m.getAddress());
-                System.out.println("전화번호: "+ m.getPhone());
+            for(TouristSpotDto touristSpotDto : list) {
+                System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
+                System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
+                System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
+                System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
+                System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
+                System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
             }
 
             // 좋아요 개수 조회 및 출력
             int likeCount = likesService.getLikeCount(touristSpotId);
-            System.out.println("❤️ 좋아요 수: " + likeCount);
+            System.out.println("❤️ 좋아요 수 : " + likeCount);
 
 
             System.out.println("-------------------------------------");
@@ -528,7 +528,14 @@ public class TravelView {
     // 관광지 정보 출력
     public void displayTouristSpotList(ArrayList<TouristSpotDto> list) {
         for (TouristSpotDto touristSpotDto : list) {
-            System.out.println(touristSpotDto);
+            System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
+            System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
+            System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
+            System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
+            System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
+            System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
+            System.out.println("-------------------------------------");
+
         }
     }
 
@@ -610,7 +617,14 @@ public class TravelView {
     // 리뷰 리스트 보여주기
     public void displayReviewList(ArrayList<ReviewDto> list) {
         for (ReviewDto reviewDto : list) {
-            System.out.println(reviewDto);
+            System.out.println("리뷰 ID\t\t: " + reviewDto.getReviewId() +
+                    "\n사용자 ID\t: " + reviewDto.getMemberId() +
+                    "\n별점\t\t\t: " + reviewDto.getScore() +
+                    "\n제목\t\t\t: " + reviewDto.getTitle() +
+                    "\n내용\t\t\t: " + reviewDto.getDescription() +
+                    "\n관광지 ID\t: " + reviewDto.getTouristSpotId()
+            );
+            System.out.println("-------------------------------------");
         }
     }
 
@@ -631,20 +645,27 @@ public class TravelView {
         System.out.println("\n조회된 정보는 다음과 같습니다.");
         System.out.println("----------------------------------------------------------");
 
-        for (TouristSpotDto m : list) {
-
-            System.out.println(m.getTitle());
+        for (TouristSpotDto touristSpotDto : list) {
+            System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
+            System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
+            System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
+            System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
+            System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
+            System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
+            System.out.println("-------------------------------------");
         }
     }
 
     public void displayRegionTitle(ArrayList<TouristSpotDto> list) {
         System.out.println("\n----- 관광지 제목 조회 결과 -----");
-        for (TouristSpotDto m : list) {
-
-            System.out.println(m.getDistrict());
-            System.out.println(m.getTitle());
-            System.out.println(m.getDescription());
-
+        for (TouristSpotDto touristSpotDto : list) {
+            System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
+            System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
+            System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
+            System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
+            System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
+            System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
+            System.out.println("-------------------------------------");
         }
     }
 
@@ -699,11 +720,15 @@ public class TravelView {
 
     public void displayTouristSpotsByLikes(List<TouristSpotDto> spots) {
         System.out.println("\n------ 관광지 목록 (좋아요 순) ------");
-        for (TouristSpotDto spot : spots) {
-            System.out.println("ID: " + spot.getTouristSpotId() +
-                    ", 제목: " + spot.getTitle() +
-                    ", 권역: " + spot.getDistrict() +
-                    ", 좋아요 수: " + spot.getLikeCount());
+        for (TouristSpotDto touristSpotDto : spots) {
+            System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
+            System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
+            System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
+            System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
+            System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
+            System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
+            System.out.println("좋아요 수\t\t: " + touristSpotDto.getLikeCount());
+            System.out.println("-------------------------------------");
         }
     }
 
@@ -712,8 +737,14 @@ public class TravelView {
         if (favorites == null || favorites.isEmpty()) {
             System.out.println("즐겨찾기한 관광지가 없습니다.");
         } else {
-            for (TouristSpotDto spot : favorites) {
-                System.out.println(spot); // toString() 호출
+            for (TouristSpotDto touristSpotDto : favorites) {
+                System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
+                System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
+                System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
+                System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
+                System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
+                System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
+                System.out.println("-------------------------------------");
             }
         }
     }
