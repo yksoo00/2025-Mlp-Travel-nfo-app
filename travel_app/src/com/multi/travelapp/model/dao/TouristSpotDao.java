@@ -195,7 +195,7 @@ public class TouristSpotDao {
 
             while(rs.next()){
                 TouristSpotDto touristSpotDto = new TouristSpotDto();
-                touristSpotDto.setId(rs.getInt("tourist_spot_id"));
+                touristSpotDto.setTourist_spot_id(rs.getLong("tourist_spot_id"));
                 touristSpotDto.setTitle(rs.getString("title"));
                 touristSpotDto.setDescription(rs.getString("description"));
                 touristSpotDto.setAddress(rs.getString("address"));

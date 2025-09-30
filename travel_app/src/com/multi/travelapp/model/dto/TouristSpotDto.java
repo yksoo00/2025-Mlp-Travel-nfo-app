@@ -10,6 +10,10 @@ public class TouristSpotDto {
     private String phone;
     private int likeCount;
 
+    public TouristSpotDto() {
+
+    }
+
     public int getLikeCount() {
         return likeCount;
     }
@@ -25,9 +29,17 @@ public class TouristSpotDto {
 
     public void setTouristSpotId(Long tourist_spot_id) {
         this.tourist_spot_id = tourist_spot_id;
-      
-    public TouristSpotDto() {
+    }
 
+    public TouristSpotDto(Long tourist_spot_id, String district, String title, String description, String address,
+                          String phone) {
+        this.tourist_spot_id = tourist_spot_id;
+        this.district = district;
+        this.title = title;
+        this.description = description;
+        this.address = address;
+        this.phone = phone;
+        this.likeCount = 0;
     }
 
     public void setTourist_spot_id(Long tourist_spot_id) {

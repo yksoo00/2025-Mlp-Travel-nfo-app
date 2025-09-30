@@ -63,12 +63,12 @@ public class ReviewService {
     }
 
     // memberId, reviewDto로 리뷰 등록
-    public int insertReview(Long memberId, ReviewDto reviewDto) {
+    public int insertReview(ReviewDto reviewDto) {
         int result;
         try {
             conn = dbcp.getConnection();
             conn.setAutoCommit(false); // 오토커밋 false
-            result = reviewDao.insertReview(conn, memberId, reviewDto);
+            result = reviewDao.insertReview(conn, reviewDto);
             if (result > 0) {
                 conn.commit();
             } else {

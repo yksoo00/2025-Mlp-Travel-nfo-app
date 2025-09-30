@@ -1,6 +1,7 @@
 package com.multi.travelapp.view;
 
 
+import com.multi.travelapp.common.Session;
 import com.multi.travelapp.controller.*;
 import com.multi.travelapp.model.dto.MemberDto;
 import com.multi.travelapp.model.dto.ReviewDto;
@@ -42,14 +43,13 @@ public class TravelView {
             int input = Integer.parseInt(sc.nextLine());
             switch (input) {
                 case 1:
-                    adminPage(1L);// 로그인 화면
+                    signInPage();// 로그인 화면
                     break;
                 case 2:
                     signUpPage(); // 회원가입 화면
-                    //customerMainPage(1L); // 테스트 코드
                     break;
                 case 3:
-                    adminPage(1L);
+                    adminPage();
                     break;
                 case 9:
                     exit(0);
@@ -80,8 +80,12 @@ public class TravelView {
                     String password = sc.nextLine();
 
                     SignInDto signInDto = new SignInDto(email, password);
-                    if(memberController.signIn(signInDto)>0){
-                        customerMainPage(1L);
+                    MemberDto memberDto = memberController.signIn(signInDto);
+
+                    if(memberDto!=null){
+                        Session.login(memberDto);
+                        System.out.println("세션 아이디 : " +Session.getCurrentMemberId());
+                        customerMainPage();
                     } // 로그인
                     else return;
 
@@ -146,7 +150,8 @@ public class TravelView {
 
 
 
-    public void customerMainPage(Long memberId) {
+    public void customerMainPage() {
+        Long memberId = Session.getCurrentMemberId();
         while(true) {
             System.out.println();
             System.out.println("---고객 메인 화면---");
@@ -159,15 +164,16 @@ public class TravelView {
 
             switch (input) {
                 case 1:
-                    touristSpotPage(memberId); // 관광지 목록 조회 화면
+                    touristSpotPage(); // 관광지 목록 조회 화면
                     break;
                 case 2:
-                    myReviewPage(memberId); // 내 리뷰 화면
+                    myReviewPage(); // 내 리뷰 화면
                     break;
                 case 3:
                     bookMarkController.myBookMarkPage(memberId); // 즐겨찾기 화면
                     break;
                 case 9:
+                    Session.logout();
                     return; // 로그아웃 - 로그인 화면으로 이동
                 default:
                     System.out.println("올바른 값을 입력하세요");
@@ -179,7 +185,8 @@ public class TravelView {
 
     // ------------------------------- 관광지 서비스 ------------------------------
     // 관광지 조회 방법 선택 화면
-    public void touristSpotPage(Long memberId) {
+    public void touristSpotPage() {
+        Long memberId = Session.getCurrentMemberId();
         while(true){
             System.out.println();
             System.out.println("---관광지 조회 방법 선택 화면---");
@@ -193,16 +200,16 @@ public class TravelView {
 
             switch (input){
                 case 1:
-                    allTouristSpotPage(memberId); // 관광지 전체 조회(페이지별)
+                    allTouristSpotPage(); // 관광지 전체 조회(페이지별)
                     break;
                 case 2:
-                    byTitleTouristSpotPage(memberId); // 관광지 제목으로 조회
+                    byTitleTouristSpotPage(); // 관광지 제목으로 조회
                     break;
                 case 3:
-                    byRegionTouristSpotPage(memberId); // 권역별 관광지 조회
+                    byRegionTouristSpotPage(); // 권역별 관광지 조회
                     break;
                 case 4:
-                    byLikesTouristSpotPage(memberId); // 좋아요 순으로 조회
+                    byLikesTouristSpotPage(); // 좋아요 순으로 조회
                     break;
                 case 9:
                     return; // 메인 화면으로
@@ -214,7 +221,8 @@ public class TravelView {
     }
 
     // 관광지 전체 조회(페이지별)
-    public void allTouristSpotPage(Long memberId){
+    public void allTouristSpotPage(){
+        Long memberId = Session.getCurrentMemberId();
         while(true) {
             System.out.println();
             System.out.println("---관광지 전체 페이지별 조회 화면---");
@@ -235,8 +243,8 @@ public class TravelView {
                 case 2:
                     System.out.print("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine()); // 사용자가 touristSpotId 입력
-                    ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
-                    detailPage(memberId, touristSpotId,list);
+                    ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId,touristSpotId);
+                    detailPage(touristSpotId,list);
 
                     break;
                 case 9:
@@ -249,7 +257,8 @@ public class TravelView {
     }
 
     // 관광지 제목으로 조회
-    public void byTitleTouristSpotPage(Long memberId){
+    public void byTitleTouristSpotPage(){
+        Long memberId = Session.getCurrentMemberId();
         while(true){
             System.out.println();
             System.out.println("---관광지 제목으로 조회 화면---");
@@ -270,7 +279,7 @@ public class TravelView {
                     System.out.println("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine());
                     ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
-                    detailPage(memberId, touristSpotId,list);
+                    detailPage(touristSpotId,list);
                     break;
                 case 9:
                     return;
@@ -285,7 +294,8 @@ public class TravelView {
 
 
     // 권역별 관광지 조회
-    public void byRegionTouristSpotPage(Long memberId){
+    public void byRegionTouristSpotPage(){
+        Long memberId = Session.getCurrentMemberId();
         while(true){
             System.out.println();
             System.out.println("---권역별 관광지 조회 화면---");
@@ -305,7 +315,7 @@ public class TravelView {
                     System.out.println("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine());
                     ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
-                    detailPage(memberId, touristSpotId,list);
+                    detailPage(touristSpotId,list);
                     break;
                 case 9:
                     return;
@@ -317,7 +327,8 @@ public class TravelView {
     }
 
     // 좋아요 순으로 조회
-    public void byLikesTouristSpotPage(Long memberId){
+    public void byLikesTouristSpotPage(){
+        Long memberId = Session.getCurrentMemberId();
         while(true){
             System.out.println();
             System.out.println("---좋아요 순으로 조회 화면---");
@@ -335,7 +346,7 @@ public class TravelView {
                     System.out.print("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine());
                     ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
-                    detailPage(memberId, touristSpotId,list);
+                    detailPage(touristSpotId,list);
                     break;
                 case 9:
                     return;
@@ -347,9 +358,9 @@ public class TravelView {
     }
 
     // 상세 정보 보기 화면
-    public void detailPage(Long memberId, Long touristSpotId,ArrayList<TouristSpotDto> list) {
+    public void detailPage(Long touristSpotId,ArrayList<TouristSpotDto> list) {
         LikesService likesService = new LikesService();
-
+        Long memberId = Session.getCurrentMemberId();
         while(true){
             System.out.println();
             System.out.println("---{관광지 id : " + touristSpotId + "}의 상세 정보 보기 화면---"); // 상세페이지에서 관광지id볼 수 있도록 수정
@@ -397,7 +408,7 @@ public class TravelView {
                     reviewDto.setMemberId(memberId);
                     reviewDto.setTouristSpotId(touristSpotId);
 
-                    reviewController.insertReview(memberId, reviewDto);
+                    reviewController.insertReview(reviewDto);
                     break;
                 case "2": // 리뷰 삭제
                     System.out.print("삭제할 리뷰의 ID를 입력하세요 : ");
@@ -405,14 +416,9 @@ public class TravelView {
                     reviewController.deleteReview(memberId, reviewId);
                     break;
                 case "3": // 즐겨찾기 등록/삭제
-                    System.out.print("즐겨찾기 등록/삭제할 관광지의 ID를 입력하세요 : ");
-                    touristSpotId = Long.parseLong(sc.nextLine());
                     bookMarkController.updateBookMark(memberId, touristSpotId);
                     break;
                 case "4": // 좋아요 등록/삭제
-                    System.out.print("좋아요 등록/삭제할 관광지의 ID를 입력하세요 : ");
-                    touristSpotId = Long.parseLong(sc.nextLine());
-
                     likesController.updateLikes(memberId, touristSpotId);
                     break;
                 case "9": // 이전 화면으로
@@ -424,35 +430,38 @@ public class TravelView {
         }
     }
 
-    public void adminPage(Long memberId){
-        System.out.println();
-        System.out.println("---고객 메인 화면---");
-        System.out.println("1. 관광지 조회 방법 선택");
-        System.out.println("2. 관광지 등록");
-        System.out.println("3. 관광지 수정");
-        System.out.println("4. 관광지 삭제");
-        System.out.println("9. 로그아웃 - 로그인 화면으로 이동");
-        System.out.print("입력 : ");
-        int input = Integer.parseInt(sc.nextLine());
+    public void adminPage(){
+        while (true) {
+            System.out.println();
+            System.out.println("---고객 메인 화면---");
+            System.out.println("1. 관광지 조회 방법 선택");
+            System.out.println("2. 관광지 등록");
+            System.out.println("3. 관광지 수정");
+            System.out.println("4. 관광지 삭제");
+            System.out.println("9. 로그아웃 - 로그인 화면으로 이동");
+            System.out.print("입력 : ");
+            int input = Integer.parseInt(sc.nextLine());
 
-        switch (input) {
-            case 1:
-                touristSpotPage(memberId); // 관광지 목록 조회 화면
-                break;
-            case 2:
-                touristSpotInsertPage();
-                break;
-            case 3:
-                touristSpotUpdatePage();
-                break;
-            case 4:
-                touristSpotdeletePage();
-                break;
-            case 9:
-                return; // 로그아웃 - 로그인 화면으로 이동
-            default:
-                System.out.println("올바른 값을 입력하세요");
-                break;
+            switch (input) {
+                case 1:
+                    touristSpotPage(); // 관광지 목록 조회 화면
+                    break;
+                case 2:
+                    touristSpotInsertPage();
+                    break;
+                case 3:
+                    touristSpotUpdatePage();
+                    break;
+                case 4:
+                    touristSpotdeletePage();
+                    break;
+                case 9:
+                    Session.logout();
+                    return;
+                default:
+                    System.out.println("올바른 값을 입력하세요");
+                    break;
+            }
         }
     }
 
@@ -462,7 +471,7 @@ public class TravelView {
         System.out.println("삭제할 관광지를 선택 : ");
         Long input = Long.parseLong(sc.nextLine());
         touristSpotController.deleteTouristSpot(input);
-        adminPage(1L);
+
     }
 
     private void touristSpotUpdatePage() {
@@ -482,7 +491,7 @@ public class TravelView {
         String phone = sc.nextLine();
         TouristSpotDto touristSpotDto = new TouristSpotDto(district,title,description,address,phone);
         touristSpotController.UpdateTouristSpot(touristSpotDto,input);
-        adminPage(1L);
+
     }
 
     private void touristSpotInsertPage() {
@@ -499,7 +508,6 @@ public class TravelView {
         String phone = sc.nextLine();
         TouristSpotDto touristSpotDto = new TouristSpotDto(district,title,description,address,phone);
         touristSpotController.insertTouristSpot(touristSpotDto);
-        adminPage(1L);
     }
 
 
@@ -513,7 +521,8 @@ public class TravelView {
 
     // ------------------------------- 리뷰 서비스 ------------------------------
     // 내 리뷰 화면
-    public void myReviewPage(Long memberId){
+    public void myReviewPage(){
+        Long memberId = Session.getCurrentMemberId();
         while(true) {
             System.out.println();
             System.out.println("---내 리뷰 화면---");
@@ -537,7 +546,7 @@ public class TravelView {
                 case 2: // 리뷰 수정
                     System.out.print("수정할 리뷰의 ID 입력 : ");
                     reviewId = Long.parseLong(sc.nextLine());
-                    updateReviewPage(memberId, reviewId);
+                    updateReviewPage(reviewId);
                     break;
                 case 9: // 메인 화면으로
                     return;
@@ -550,7 +559,8 @@ public class TravelView {
     }
 
     // 리뷰 수정 화면
-    public void updateReviewPage(Long memberId, Long reviewId){
+    public void updateReviewPage(Long reviewId){
+        Long memberId = Session.getCurrentMemberId();
         while(true){
             System.out.println();
             System.out.println("---" + reviewId + "번 리뷰 수정 화면---");
