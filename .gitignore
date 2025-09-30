@@ -1,7 +1,7 @@
 # Default ignored files
 /shelf/
 /.idea/workspace.xml
-
+travel_app/.out
 .gradle/
 build/
 
