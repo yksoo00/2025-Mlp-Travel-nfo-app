@@ -6,12 +6,13 @@ import com.multi.travelapp.model.dto.TouristSpotDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.SQLException;
+
 import java.util.List;
 
 public class BookMarkDao {
-
+  
     // 즐겨찾기 존재 여부
     public boolean existsFavorite(Connection conn, Long memberId, Long touristSpotId) throws SQLException {
         String sql = "SELECT COUNT(*) FROM bookmark WHERE member_id = ? AND tourist_spot_id = ?";
@@ -73,27 +74,20 @@ public class BookMarkDao {
             }
         }
     }
+      public ArrayList<TouristSpotDto> selectAllBookMarkByMemberId(Connection conn, Long memberId) {
+        ArrayList<TouristSpotDto> list = new ArrayList<>();
 
-
-
-    // 특정 사용자의 즐겨찾기 관광지 상세 목록 조회
-    public List<TouristSpotDto> findFavoritesByMemberId(Connection conn, Long memberId) throws SQLException {
-        List<TouristSpotDto> list = new ArrayList<>();
-
-        String sql = "SELECT ts.tourist_spot_id, ts.title, ts.district, ts.description, ts.address, ts.phone " +
-                "FROM bookmark b " +
-                "JOIN tourist_spot ts ON b.tourist_spot_id = ts.tourist_spot_id " +
+        String sql = "SELECT a.*\n" +
+                "FROM tourist_spot a\n" +
+                "INNER JOIN bookmark b \n" +
+                "    ON a.tourist_spot_id = b.tourist_spot_id\n" +
                 "WHERE b.member_id = ?";
 
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setLong(1, memberId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    TouristSpotDto dto = new TouristSpotDto();
-                    dto.setTouristSpotId(rs.getLong("tourist_spot_id"));
+
+ 
+                    dto.setTourist_spot_id(rs.getLong("tourist_spot_id"));
                     dto.setTitle(rs.getString("title"));
                     dto.setDistrict(rs.getString("district"));
-                    dto.setDescription(rs.getString("description"));
                     dto.setAddress(rs.getString("address"));
                     dto.setPhone(rs.getString("phone"));
                     list.add(dto);
@@ -104,12 +98,8 @@ public class BookMarkDao {
     }
 
 
-
-
-
-
-
-
-
-
 }
+
+
+
+
