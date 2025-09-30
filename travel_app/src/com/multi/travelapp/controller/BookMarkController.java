@@ -8,12 +8,7 @@ import java.util.List;
 
 public class BookMarkController {
     private final BookMarkService bookMarkService = new BookMarkService();
-    private TravelView travelView;
 
-
-    public void setTravelView(TravelView travelView) {
-        this.travelView = travelView;
-    }
 
 
 
@@ -54,6 +49,7 @@ public class BookMarkController {
 
     // 내가 즐겨찾기한 관광지 목록 (상세 정보까지)
     public void myBookMarkPage(Long memberId) {
+        TravelView travelView = new TravelView();
         List<TouristSpotDto> favorites = bookMarkService.getMyBookMarkById(memberId);
         travelView.displayMyBookMarks(favorites);
     }
