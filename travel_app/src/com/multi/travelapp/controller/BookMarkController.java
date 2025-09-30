@@ -50,14 +50,15 @@ public class BookMarkController {
     }
 
 
- public void selectAllMyBookMarkPage(Long memberId) {
+ public ArrayList<TouristSpotDto> selectAllMyBookMarkPage(Long memberId) {
         TravelView travelView = new TravelView();
-
+        ArrayList<TouristSpotDto> list = null;
         try {
-            ArrayList<TouristSpotDto> list = bookMarkService.selectAllBookMarkByMemberId(memberId); // 내 즐겨찾기 전체 가져오기
+            list = bookMarkService.selectAllBookMarkByMemberId(memberId); // 내 즐겨찾기 전체 가져오기
 
             if (!list.isEmpty()) {
                 travelView.displayBookMarkList(list);
+
             } else {
                 travelView.displayNoData();
             }
@@ -65,5 +66,6 @@ public class BookMarkController {
             e.printStackTrace();
         }
 
+     return list;
     }
 }

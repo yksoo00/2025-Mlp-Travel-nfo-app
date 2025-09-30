@@ -32,7 +32,7 @@ public class DBConnectionMgr {
     private String _driver = "com.mysql.cj.jdbc.Driver",
     _url = "jdbc:mysql://localhost:3306/travel_db",
     _user = "root",
-    _password = "1234";
+    _password = "rudtn315";
     private boolean _traceOn = false;
     private boolean initialized = false;
     private int _openConnections = 10;
@@ -137,9 +137,7 @@ public class DBConnectionMgr {
                 c = co.connection;
                 co.inUse = true;
 
-                System.out.println("Thread " + Thread.currentThread().getId() + " existing  got new connection."+ c);
 
-                System.out.println("ConnectionPoolManager: Using existing DB connection #" + (i + 1));
                 break;
 
 
@@ -150,7 +148,7 @@ public class DBConnectionMgr {
             c = createConnection();
             co = new ConnectionObject(c, true);
             connections.addElement(co);
-            System.out.println("Thread " + Thread.currentThread().getId() + " created and got new connection."+ c);
+
 
         }
         return c;
@@ -167,7 +165,7 @@ public class DBConnectionMgr {
             co = (ConnectionObject) connections.get(i);
             if (c == co.connection) {
                 co.inUse = false;
-                System.out.println("Thread " + Thread.currentThread().getId() + " released connection #" + (i + 1) + c);
+
 
                 break;
             }

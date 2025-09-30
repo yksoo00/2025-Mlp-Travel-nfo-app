@@ -2,9 +2,9 @@ package com.multi.travelapp.model.dto;
 
 public class BookMarkDto {
 
-    private long bookmarkId;
-    private long memberId;
-    private long touristSpotId;
+    private Long bookmarkId;
+    private Long memberId;
+    private Long touristSpotId;
 
     public BookMarkDto() {
     }

@@ -5,7 +5,7 @@ import java.lang.reflect.Member;
 
 public class Session {
     private static Long currentMemberId;
-
+    private static boolean isAdmin;
     public static void login(MemberDto member) {
         currentMemberId = member.getMemberId();
     }
@@ -16,5 +16,15 @@ public class Session {
 
     public static void logout() {
         currentMemberId = null;
+        isAdmin = false;
     }
+
+    public static void setIsAdminTrue(){
+        isAdmin = true;
+    }
+
+    public static boolean getIsAdmin(){
+        return isAdmin;
+    }
+
 }
