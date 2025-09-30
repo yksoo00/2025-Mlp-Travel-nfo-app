@@ -12,12 +12,7 @@ import java.util.ArrayList;
 
 public class BookMarkController {
     private final BookMarkService bookMarkService = new BookMarkService();
-    private TravelView travelView;
 
-
-    public void setTravelView(TravelView travelView) {
-        this.travelView = travelView;
-    }
 
 
 
@@ -55,7 +50,6 @@ public class BookMarkController {
     }
 
 
-
  public void selectAllMyBookMarkPage(Long memberId) {
         TravelView travelView = new TravelView();
 
@@ -70,5 +64,6 @@ public class BookMarkController {
         } catch (RuntimeException e) {
             e.printStackTrace();
         }
+
     }
 }

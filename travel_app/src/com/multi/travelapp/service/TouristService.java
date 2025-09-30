@@ -40,7 +40,6 @@ public class TouristService {
             throw new RuntimeException("상세정보 조회 실패", e);
         } finally {
             if (conn != null) {
-                istSpotDao = new TouristSpotDao();
                 dbcp.freeConnection(conn);
             }
 
@@ -171,4 +170,22 @@ public class TouristService {
                 }
                 return result;
             }
+    // page로 관광지 조회
+    public ArrayList<TouristSpotDto> selectAllTouristSpotByPage(int page) {
+        ArrayList<TouristSpotDto> list = new ArrayList<>();
+        Connection conn = null;
+
+        try {
+            conn = dbcp.getConnection();
+            list = touristSpotDao.selectAllTouristSpotByPage(conn, page);
+        } catch (Exception e) {
+            throw new RuntimeException("페이지별 관광지 조회 실패", e);
+        } finally {
+            if (conn != null) {
+                dbcp.freeConnection(conn);
+            }
+        }
+
+        return list;
+    }
 }

@@ -86,7 +86,7 @@ public class ReviewDao {
     }
 
     // memberId, reviewId로 리뷰 등록
-    public int insertReview(Connection conn, Long memberId, ReviewDto reviewDto) {
+    public int insertReview(Connection conn,ReviewDto reviewDto) {
         PreparedStatement pstmt = null;
         int result = 0;
 

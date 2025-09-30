@@ -96,7 +96,7 @@ public class TouristSpotController {
              list = touristService.selectTouristSpotById(memberId,touristSpotId);
 
             if (!list.isEmpty()) {
-                travelView.detailPage(memberId,touristSpotId,list);
+                travelView.detailPage(touristSpotId,list);
             } else {
                 travelView.displayNoData();
             }
@@ -115,7 +115,7 @@ public class TouristSpotController {
         TravelView travelView = new TravelView();
 
         try {
-            ArrayList<TouristSpotDto> list = memberService.selectAllTouristSpotByPage(page);
+            ArrayList<TouristSpotDto> list = touristService.selectAllTouristSpotByPage(page);
 
             if (!list.isEmpty()) {
                 travelView.displayTouristSpotList(list);

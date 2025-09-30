@@ -50,9 +50,9 @@ public class ReviewController {
     }
 
     // memberId, reviewDto로 리뷰 등록
-    public void insertReview(Long memberId, ReviewDto reviewDto) {
+    public void insertReview(ReviewDto reviewDto) {
         try {
-            int result = reviewService.insertReview(memberId, reviewDto);
+            int result = reviewService.insertReview(reviewDto);
             if (result > 0) {
                 System.out.println("리뷰 등록 성공!");
             } else {
