@@ -2,14 +2,35 @@ package com.multi.travelapp.service;
 
 import com.multi.travelapp.common.DBConnectionMgr;
 import com.multi.travelapp.model.dao.BookMarkDao;
-import com.multi.travelapp.model.dto.TouristSpotDto;
 
+import com.multi.travelapp.model.dao.ReviewDao;
+import com.multi.travelapp.model.dto.TouristSpotDto;
 import java.sql.Connection;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class BookMarkService {
     private final BookMarkDao bookMarkDao = new BookMarkDao();
     private final DBConnectionMgr dbcp = DBConnectionMgr.getInstance();
+    Connection conn = null;
+    DBConnectionMgr dbcp = null;
+
+    public BookMarkService() {
+        dbcp = DBConnectionMgr.getInstance();
+
+        if (dbcp.getConnectionCount() == 0) {
+            try {
+                dbcp.setInitOpenConnections(10);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        bookMarkDao = new BookMarkDao();
+    }
+
+  
+
 
     public boolean checkIfFavorited(Long memberId, Long touristSpotId) {
         Connection conn = null;
@@ -84,17 +105,22 @@ public class BookMarkService {
             if (conn != null) dbcp.freeConnection(conn);
         }
     }
-
-
-    public List<TouristSpotDto> getMyBookMarkById(Long memberId) {
-        Connection conn = null;
+    public  ArrayList<TouristSpotDto> selectAllBookMarkByMemberId(Long memberId) {
+        ArrayList<TouristSpotDto> list;
         try {
             conn = dbcp.getConnection();
-            return bookMarkDao.findFavoritesByMemberId(conn, memberId);
+            list = bookMarkDao.selectAllBookMarkByMemberId(conn, memberId);
         } catch (Exception e) {
-            throw new RuntimeException("즐겨찾기 목록 조회 실패", e);
+            throw new RuntimeException(e);
         } finally {
-            if (conn != null) dbcp.freeConnection(conn);
+            if (conn != null) {
+                dbcp.freeConnection(conn);
+            }
         }
+
+        return list;
     }
+
+
+
 }
