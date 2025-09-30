@@ -28,16 +28,20 @@ public class TravelView {
             System.out.println("---로그인/회원가입 화면---");
             System.out.println("1. 로그인");
             System.out.println("2. 회원가입");
+            System.out.println("3. 관리자");
             System.out.println("9. Travel App 종료");
             System.out.print("입력 : ");
             int input = Integer.parseInt(sc.nextLine());
             switch (input) {
                 case 1:
-                    signInPage(); // 로그인 화면
+                    adminPage(1L);// 로그인 화면
                     break;
                 case 2:
                     signUpPage(); // 회원가입 화면
                     //customerMainPage(1L); // 테스트 코드
+                    break;
+                case 3:
+                    adminPage(1L);
                     break;
                 case 9:
                     exit(0);
@@ -386,6 +390,85 @@ public class TravelView {
             }
         }
     }
+
+    public void adminPage(Long memberId){
+        System.out.println();
+        System.out.println("---고객 메인 화면---");
+        System.out.println("1. 관광지 조회 방법 선택");
+        System.out.println("2. 관광지 등록");
+        System.out.println("3. 관광지 수정");
+        System.out.println("4. 관광지 삭제");
+        System.out.println("9. 로그아웃 - 로그인 화면으로 이동");
+        System.out.print("입력 : ");
+        int input = Integer.parseInt(sc.nextLine());
+
+        switch (input) {
+            case 1:
+                touristSpotPage(memberId); // 관광지 목록 조회 화면
+                break;
+            case 2:
+                touristSpotInsertPage();
+                break;
+            case 3:
+                touristSpotUpdatePage();
+                break;
+            case 4:
+                touristSpotdeletePage();
+                break;
+            case 9:
+                return; // 로그아웃 - 로그인 화면으로 이동
+            default:
+                System.out.println("올바른 값을 입력하세요");
+                break;
+        }
+    }
+
+    private void touristSpotdeletePage() {
+        System.out.println();
+        touristSpotController.selectTouristSpot();
+        System.out.println("삭제할 관광지를 선택 : ");
+        Long input = Long.parseLong(sc.nextLine());
+        touristSpotController.deleteTouristSpot(input);
+        adminPage(1L);
+    }
+
+    private void touristSpotUpdatePage() {
+        System.out.println();
+        touristSpotController.selectTouristSpot();
+        System.out.println("수정할 관광지를 선택 : ");
+        Long input = Long.parseLong(sc.nextLine());
+        System.out.print("구역 입력 : ");
+        String district = sc.nextLine();
+        System.out.print("관광지 이름 입력 : ");
+        String title = sc.nextLine();
+        System.out.print("설명 입력 : ");
+        String description = sc.nextLine();
+        System.out.print("주소 입력 : ");
+        String address = sc.nextLine();
+        System.out.print("전화번호 입력 : ");
+        String phone = sc.nextLine();
+        TouristSpotDto touristSpotDto = new TouristSpotDto(district,title,description,address,phone);
+        touristSpotController.UpdateTouristSpot(touristSpotDto,input);
+        adminPage(1L);
+    }
+
+    private void touristSpotInsertPage() {
+        System.out.println();
+        System.out.print("구역 입력 : ");
+        String district = sc.nextLine();
+        System.out.print("관광지 이름 입력 : ");
+        String title = sc.nextLine();
+        System.out.print("설명 입력 : ");
+        String description = sc.nextLine();
+        System.out.print("주소 입력 : ");
+        String address = sc.nextLine();
+        System.out.print("전화번호 입력 : ");
+        String phone = sc.nextLine();
+        TouristSpotDto touristSpotDto = new TouristSpotDto(district,title,description,address,phone);
+        touristSpotController.insertTouristSpot(touristSpotDto);
+        adminPage(1L);
+    }
+
 
     // 관광지 정보 출력
     public void displayTouristSpotList(ArrayList<TouristSpotDto> list) {
