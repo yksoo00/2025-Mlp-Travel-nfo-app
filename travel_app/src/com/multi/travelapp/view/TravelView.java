@@ -286,7 +286,7 @@ public class TravelView {
                     System.out.println("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine());
                     ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
-                    detailPage(touristSpotId,list);
+                    //detailPage(touristSpotId,list);
                     break;
                 case 9:
                     return;
@@ -322,7 +322,7 @@ public class TravelView {
                     System.out.println("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine());
                     ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
-                    detailPage(touristSpotId,list);
+                    //detailPage(touristSpotId,list);
                     break;
                 case 9:
                     return;
@@ -353,7 +353,7 @@ public class TravelView {
                     System.out.print("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine());
                     ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
-                    detailPage(touristSpotId,list);
+                    //detailPage(touristSpotId,list);
                     break;
                 case 9:
                     return;
@@ -688,7 +688,7 @@ public class TravelView {
                     System.out.println("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine());
                     ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
-                    detailPage(touristSpotId,list);
+                    //detailPage(touristSpotId,list);
                     break;
                 case 9: // 메인 화면으로
                     return;
