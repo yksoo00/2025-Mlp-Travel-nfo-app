@@ -703,7 +703,13 @@ public class TravelView {
     // 내 즐겨찾기 리스트
     public void displayBookMarkList(ArrayList<TouristSpotDto> list) {
         for (TouristSpotDto touristSpotDto : list) {
-            System.out.println(touristSpotDto);
+            System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
+            System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
+            System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
+            System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
+            System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
+            System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
+            System.out.println("-------------------------------------");
         }
     }
 
