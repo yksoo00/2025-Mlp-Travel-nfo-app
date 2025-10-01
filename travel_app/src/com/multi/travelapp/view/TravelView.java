@@ -80,7 +80,6 @@ public class TravelView {
 
                     if(memberDto!=null){
                         Session.login(memberDto);
-                        System.out.println("세션 아이디 : " +Session.getCurrentMemberId());
                         isAdmin(memberDto);
                         if(Session.getIsAdmin()){
                             adminPage();
@@ -252,7 +251,6 @@ public class TravelView {
                     System.out.print("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine()); // 사용자가 touristSpotId 입력
                     ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId,touristSpotId);
-                    detailPage(touristSpotId,list);
 
                     break;
                 case 9:

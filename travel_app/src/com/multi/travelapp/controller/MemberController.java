@@ -28,7 +28,7 @@ public class MemberController {
 
         try {
         if (memberDto != null) {
-            System.out.println("로그인 성공" + signInDto.getEmail());
+            System.out.println("로그인 성공 : " + signInDto.getEmail()+"님 환영합니다!");
 
         }else {
             System.out.println("로그인 실패");
