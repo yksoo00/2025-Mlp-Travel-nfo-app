@@ -4,27 +4,27 @@ import com.multi.travelapp.model.dto.MemberDto;
 import java.lang.reflect.Member;
 
 public class Session {
-    private static Long currentMemberId;
-    private static boolean isAdmin;
-    public static void login(MemberDto member) {
-        currentMemberId = member.getMemberId();
-    }
+  private static ThreadLocal<Long> currentMemberId = new ThreadLocal<>();
+  private static ThreadLocal<Boolean> isAdmin = ThreadLocal.withInitial(() -> false);
 
-    public static Long getCurrentMemberId() {
-        return currentMemberId;
-    }
+  public static void login(MemberDto member) {
+    currentMemberId.set(member.getMemberId());
+  }
 
-    public static void logout() {
-        currentMemberId = null;
-        isAdmin = false;
-    }
+  public static Long getCurrentMemberId() {
+    return currentMemberId.get();
+  }
 
-    public static void setIsAdminTrue(){
-        isAdmin = true;
-    }
+  public static void logout() {
+    currentMemberId.remove();
+    isAdmin.remove();
+  }
 
-    public static boolean getIsAdmin(){
-        return isAdmin;
-    }
+  public static void setIsAdminTrue(){
+    isAdmin.set(true);
+  }
 
+  public static boolean getIsAdmin(){
+    return isAdmin.get();
+  }
 }
