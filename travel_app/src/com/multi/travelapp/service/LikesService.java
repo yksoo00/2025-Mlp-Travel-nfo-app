@@ -11,6 +11,7 @@ public class LikesService {
     private final LikesDao likesDao = new LikesDao();
     private final DBConnectionMgr dbcp = DBConnectionMgr.getInstance();
 
+    //memberId와 touristSpotId로 좋아요 등록 여부 확인
     public boolean checkIfLiked(Long memberId, Long touristSpotId) {
         Connection conn = null;
         try {
@@ -24,6 +25,7 @@ public class LikesService {
 
     }
 
+    // 좋아요 등록
     public void addLike(Long memberId, Long touristSpotId) {
         Connection conn = null;
         try {
@@ -36,6 +38,7 @@ public class LikesService {
         }
     }
 
+    // 좋아요 삭제
     public void removeLike(Long memberId, Long touristSpotId) {
         Connection conn = null;
         try {
@@ -48,6 +51,7 @@ public class LikesService {
         }
     }
 
+    // 좋아요 개수 조회
     public int getLikeCount(Long touristSpotId) {
         Connection conn = null;
         try {
@@ -61,6 +65,7 @@ public class LikesService {
     }
 
 
+    // 좋아요 순으로 관광지 조회
     public List<TouristSpotDto> getTouristSpotsOrderByLikes() {
         Connection conn = null;
         try {
