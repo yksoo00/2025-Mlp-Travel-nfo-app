@@ -29,11 +29,9 @@ public class BookMarkService {
     }
 
   
-
-
-    public boolean checkIfFavorited(Long memberId, Long touristSpotId) {
+    // memberId와 touristSpotId로 즐겨찾기 등록 여부 확인
+    public boolean checkIfBookMarked(Long memberId, Long touristSpotId) {
         Connection conn = null;
-        int result;
 
         try {
             conn = dbcp.getConnection();
@@ -41,13 +39,15 @@ public class BookMarkService {
 
             return bookMarkDao.existsFavorite(conn, memberId, touristSpotId);
         } catch (Exception e) {
-            throw new RuntimeException("즐겨찾기 여부 확인 실패", e);
+            throw new RuntimeException(e);
         } finally {
             if (conn != null) dbcp.freeConnection(conn);
         }
     }
 
-    public void addFavorite(Long memberId, Long touristSpotId) {
+
+    // 즐겨 찾기 등록
+    public void addBookMark(Long memberId, Long touristSpotId) {
 
         Connection conn = null;
         int result;
@@ -64,13 +64,15 @@ public class BookMarkService {
             }
 
         } catch (Exception e) {
-            throw new RuntimeException("즐겨찾기 등록 실패", e);
+            throw new RuntimeException(e);
         } finally {
             if (conn != null) dbcp.freeConnection(conn);
         }
     }
 
-    public int removeFavorite(Long memberId, Long touristSpotId) {
+
+    // 즐겨찾기 삭제
+    public int removeBookMark(Long memberId, Long touristSpotId) {
         Connection conn = null;
         int result = 0;
         try {
@@ -83,7 +85,7 @@ public class BookMarkService {
                 conn.rollback();
             }
         } catch (Exception e) {
-            throw new RuntimeException("즐겨찾기 삭제 실패", e);
+            throw new RuntimeException(e);
         } finally {
             if (conn != null) dbcp.freeConnection(conn);
         }
@@ -93,17 +95,8 @@ public class BookMarkService {
     }
 
 
-    public int getBookMarkedCount(Long touristSpotId) {
-        Connection conn = null;
-        try {
-            conn = dbcp.getConnection();
-            return bookMarkDao.countFavoritesByTouristSpotId(conn, touristSpotId);
-        } catch (Exception e) {
-            throw new RuntimeException("즐겨찾기 개수 조회 실패", e);
-        } finally {
-            if (conn != null) dbcp.freeConnection(conn);
-        }
-    }
+
+    // MemberId로 즐겨찾기 조회
     public  ArrayList<TouristSpotDto> selectAllBookMarkByMemberId(Long memberId) {
         ArrayList<TouristSpotDto> list;
         try {

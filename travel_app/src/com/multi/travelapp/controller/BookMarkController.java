@@ -8,45 +8,22 @@ import com.multi.travelapp.view.TravelView;
 import java.util.ArrayList;
 
 
-   
 
 public class BookMarkController {
     private final BookMarkService bookMarkService = new BookMarkService();
 
 
-
-
-    // 즐겨찾기 등록/삭제 토글
+    // 즐겨찾기 등록/삭제
     public void updateBookMark(Long memberId, Long touristSpotId) {
-        boolean exists = bookMarkService.checkIfFavorited(memberId, touristSpotId);
+        boolean exists = bookMarkService.checkIfBookMarked(memberId, touristSpotId);
 
         if (exists) {
-            bookMarkService.removeFavorite(memberId, touristSpotId);
+            bookMarkService.removeBookMark(memberId, touristSpotId);
             System.out.println("🗑️ 즐겨찾기 삭제 완료 (관광지 ID: " + touristSpotId + ")");
         } else {
-            bookMarkService.addFavorite(memberId, touristSpotId);
+            bookMarkService.addBookMark(memberId, touristSpotId);
             System.out.println("⭐ 즐겨찾기 등록 완료 (관광지 ID: " + touristSpotId + ")");
         }
-    }
-
-    // 즐겨찾기 여부 확인
-    public boolean isFavorited(Long memberId, Long touristSpotId) {
-        return bookMarkService.checkIfFavorited(memberId, touristSpotId);
-    }
-
-    // 즐겨찾기 추가
-    public void addFavorite(Long memberId, Long touristSpotId) {
-        bookMarkService.addFavorite(memberId, touristSpotId);
-    }
-
-    // 즐겨찾기 삭제
-    public void removeFavorite(Long memberId, Long touristSpotId) {
-        bookMarkService.removeFavorite(memberId, touristSpotId);
-    }
-
-    // 특정 관광지의 즐겨찾기 개수
-    public int getFavoriteCount(Long touristSpotId) {
-        return bookMarkService.getBookMarkedCount(touristSpotId);
     }
 
 
