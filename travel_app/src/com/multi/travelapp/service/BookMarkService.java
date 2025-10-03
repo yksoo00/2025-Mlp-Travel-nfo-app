@@ -37,7 +37,7 @@ public class BookMarkService {
             conn = dbcp.getConnection();
             conn.setAutoCommit(false);
 
-            return bookMarkDao.existsFavorite(conn, memberId, touristSpotId);
+            return bookMarkDao.existsBookMark(conn, memberId, touristSpotId);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -55,7 +55,7 @@ public class BookMarkService {
         try {
             conn = dbcp.getConnection();
             conn.setAutoCommit(false);
-            result=bookMarkDao.insertFavorite(conn, memberId, touristSpotId);
+            result=bookMarkDao.insertBookMark(conn, memberId, touristSpotId);
 
             if(result>0){
                 conn.commit();
@@ -77,8 +77,9 @@ public class BookMarkService {
         int result = 0;
         try {
             conn = dbcp.getConnection();
-            result=bookMarkDao.deleteFavorite(conn, memberId, touristSpotId);
             conn.setAutoCommit(false);
+            result=bookMarkDao.deleteBookMark(conn, memberId, touristSpotId);
+
             if(result>0){
                 conn.commit();
             }else{
@@ -93,6 +94,22 @@ public class BookMarkService {
         return result;
 
     }
+
+
+    // member별 즐겨찾기 개수조회
+    public int getBookmarkCountByMember(Long memberId) {
+        Connection conn = null;
+        try {
+            conn = dbcp.getConnection();
+            return bookMarkDao.countBookmarksByMemberId(conn, memberId);
+        } catch (Exception e) {
+            throw new RuntimeException("회원별 즐겨찾기 개수 조회 실패", e);
+        } finally {
+            if (conn != null) dbcp.freeConnection(conn);
+        }
+    }
+
+
 
 
 
