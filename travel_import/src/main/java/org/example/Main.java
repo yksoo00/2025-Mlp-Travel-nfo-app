@@ -11,10 +11,13 @@ import java.sql.Statement;
 public class Main {
     public static void main(String[] args) {
         String jdbcBasic = "jdbc:mysql://localhost:3306?serverTimezone=UTC";
-        String jdbc = "jdbc:mysql://localhost:3306/travel_db?serverTimezone=UTC";
+        String jdbc = "jdbc:mysql://localhost:3306/travel_db"
+                + "?useSSL=false"
+                + "&allowPublicKeyRetrieval=true"
+                + "&serverTimezone=UTC";
         String user = "root";
-        String password = "rudtn315";
-        String csvFilePath = "travel_import/src/main/resources/travel.csv";
+        String password = "1234";
+        String csvFilePath = "src/main/resources/travel.csv";
 
         try (Connection conn = DriverManager.getConnection(jdbcBasic, user, password)) {
             Statement stmt = conn.createStatement();
@@ -32,7 +35,8 @@ public class Main {
                                 title varchar(50) not null,
                                 description varchar(10000),
                                 address varchar(255),
-                                phone varchar(100)
+                                phone varchar(100),
+                                like_count int unsigned not null default 0
                             );
                     
                     """;
