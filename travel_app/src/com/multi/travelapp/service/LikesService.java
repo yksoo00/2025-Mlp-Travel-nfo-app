@@ -5,6 +5,7 @@ import com.multi.travelapp.model.dao.LikesDao;
 import com.multi.travelapp.model.dto.TouristSpotDto;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class LikesService {
@@ -28,11 +29,22 @@ public class LikesService {
     // 좋아요 등록
     public void addLike(Long memberId, Long touristSpotId) {
         Connection conn = null;
+        int result;
+
         try {
             conn = dbcp.getConnection();
-            likesDao.insertLike(conn, memberId, touristSpotId);
+            conn.setAutoCommit(false);
+
+            result=likesDao.insertLike(conn, memberId, touristSpotId);
+            if(result>0){
+                conn.commit();
+            }else{
+                conn.rollback();
+            }
+
         } catch (Exception e) {
-            throw new RuntimeException("좋아요 등록 실패", e);
+            throw new RuntimeException(e);
+
         } finally {
             if (conn != null) dbcp.freeConnection(conn);
         }
@@ -41,11 +53,20 @@ public class LikesService {
     // 좋아요 삭제
     public void removeLike(Long memberId, Long touristSpotId) {
         Connection conn = null;
+        int result;
         try {
             conn = dbcp.getConnection();
-            likesDao.deleteLike(conn, memberId, touristSpotId);
+            conn.setAutoCommit(false);
+            result=likesDao.deleteLike(conn, memberId, touristSpotId);
+
+            if(result>0){
+                conn.commit();
+            }else{
+                conn.rollback();
+            }
+
         } catch (Exception e) {
-            throw new RuntimeException("좋아요 삭제 실패", e);
+            throw new RuntimeException(e);
         } finally {
             if (conn != null) dbcp.freeConnection(conn);
         }

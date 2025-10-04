@@ -5,12 +5,19 @@ import com.multi.travelapp.model.dto.ReviewDto;
 import com.multi.travelapp.model.dto.TouristSpotDto;
 import com.multi.travelapp.service.BookMarkService;
 import com.multi.travelapp.view.TravelView;
+
 import java.util.ArrayList;
 
 
-
 public class BookMarkController {
-    private final BookMarkService bookMarkService = new BookMarkService();
+    private BookMarkService bookMarkService = new BookMarkService();
+    private TravelView travelView;
+
+    public BookMarkController() {}
+
+    public BookMarkController(TravelView travelView) {
+        this.travelView = travelView;
+    }
 
 
     // 즐겨찾기 등록/삭제
@@ -27,7 +34,7 @@ public class BookMarkController {
     }
 
 
- public ArrayList<TouristSpotDto> selectAllMyBookMarkPage(Long memberId) {
+    public ArrayList<TouristSpotDto> selectAllMyBookMarkPage(Long memberId) {
         TravelView travelView = new TravelView();
         ArrayList<TouristSpotDto> list = null;
         try {
@@ -43,6 +50,13 @@ public class BookMarkController {
             e.printStackTrace();
         }
 
-     return list;
+        return list;
     }
+
+    // 관광지별 북마크 개수 조회 후 뷰로 전달
+    public void showBookmarkCount(Long memberId) {
+        int count = bookMarkService.getBookmarkCountByMember(memberId);
+        travelView.displayBookmarkCountByMember(memberId,count);
+    }
+
 }

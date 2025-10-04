@@ -26,7 +26,8 @@ public class TravelView {
 
     public TravelView() {
         this.likesController = new LikesController(this);
-        this.bookMarkController = new BookMarkController();
+        this.bookMarkController = new BookMarkController(this);
+
     }
 
 
@@ -78,10 +79,10 @@ public class TravelView {
 
                     MemberDto memberDto = memberController.signIn(signInDto);
 
-                    if(memberDto!=null){
+                    if (memberDto != null) {
                         Session.login(memberDto);
                         isAdmin(memberDto);
-                        if(Session.getIsAdmin()){
+                        if (Session.getIsAdmin()) {
                             adminPage();
                         }
                         customerMainPage();
@@ -148,11 +149,9 @@ public class TravelView {
     }
 
 
-
-
     public void customerMainPage() {
         Long memberId = Session.getCurrentMemberId();
-        while(true) {
+        while (true) {
             System.out.println();
             System.out.println("---고객 메인 화면---");
             System.out.println("1. 관광지 조회 방법 선택");
@@ -189,16 +188,16 @@ public class TravelView {
     public void touristSpotPage() {
         Long memberId = Session.getCurrentMemberId();
         boolean isAdmin = Session.getIsAdmin();
-        while(true){
+        while (true) {
             System.out.println();
             System.out.println("---관광지 조회 방법 선택 화면---");
             System.out.println("1. 관광지 전체 조회(페이지별)");
             System.out.println("2. 관광지 제목으로 조회");
             System.out.println("3. 권역별 관광지 조회");
             System.out.println("4. 좋아요 순으로 조회");
-            if (isAdmin){
+            if (isAdmin) {
                 System.out.println("9. 관리자 페이지로 이동");
-            }else {
+            } else {
                 System.out.println("9. 메인 화면으로 이동");
             }
             System.out.print("입력 : ");
@@ -228,9 +227,9 @@ public class TravelView {
 
     // 관광지 전체 조회(페이지별)
 
-    public void allTouristSpotPage(){
+    public void allTouristSpotPage() {
         Long memberId = Session.getCurrentMemberId();
-        while(true) {
+        while (true) {
             System.out.println();
             System.out.println("---관광지 전체 페이지별 조회 화면---");
 
@@ -250,7 +249,7 @@ public class TravelView {
                 case 2:
                     System.out.print("(상세 정보 보기) 관광지 ID 입력 : ");
                     Long touristSpotId = Long.parseLong(sc.nextLine()); // 사용자가 touristSpotId 입력
-                    ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId,touristSpotId);
+                    ArrayList<TouristSpotDto> list = touristSpotController.selectTouristSpotById(memberId, touristSpotId);
 
                     break;
                 case 9:
@@ -264,9 +263,9 @@ public class TravelView {
 
     // 관광지 제목으로 조회
 
-    public void byTitleTouristSpotPage(){
+    public void byTitleTouristSpotPage() {
         Long memberId = Session.getCurrentMemberId();
-        while(true){
+        while (true) {
             System.out.println();
             System.out.println("---관광지 제목으로 조회 화면---");
             System.out.println("1. 관광지 제목으로 조회");
@@ -300,9 +299,9 @@ public class TravelView {
 
 
     // 권역별 관광지 조회
-    public void byRegionTouristSpotPage(){
+    public void byRegionTouristSpotPage() {
         Long memberId = Session.getCurrentMemberId();
-        while(true){
+        while (true) {
 
             System.out.println();
             System.out.println("---권역별 관광지 조회 화면---");
@@ -334,9 +333,9 @@ public class TravelView {
     }
 
 
-    public void byLikesTouristSpotPage(){
+    public void byLikesTouristSpotPage() {
         Long memberId = Session.getCurrentMemberId();
-        while(true){
+        while (true) {
             System.out.println();
             System.out.println("---좋아요 순으로 조회 화면---");
             System.out.println("1. 좋아요 순으로 관광지 조회");
@@ -366,21 +365,21 @@ public class TravelView {
 
 
     // 상세 정보 보기 화면
-    public void detailPage(Long touristSpotId,ArrayList<TouristSpotDto> list) {
+    public void detailPage(Long touristSpotId, ArrayList<TouristSpotDto> list) {
         LikesService likesService = new LikesService();
         Long memberId = Session.getCurrentMemberId();
-        while(true){
+        while (true) {
             System.out.println();
             System.out.println("---{관광지 id : " + touristSpotId + "}의 상세 정보 보기 화면---"); // 상세페이지에서 관광지id볼 수 있도록 수정
             //touristSpotController.selectTouristSpotById(memberId, touristSpotId); // 관광지 정보 출력
 
-            for(TouristSpotDto touristSpotDto : list) {
+            for (TouristSpotDto touristSpotDto : list) {
                 System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
-                System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
-                System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
-                System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
-                System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
-                System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
+                System.out.println("제목\t\t\t: " + touristSpotDto.getTitle());
+                System.out.println("권역\t\t\t: " + touristSpotDto.getDistrict());
+                System.out.println("설명\t\t\t: " + touristSpotDto.getDescription());
+                System.out.println("주소\t\t\t: " + touristSpotDto.getAddress());
+                System.out.println("전화번호\t\t: " + touristSpotDto.getPhone());
             }
 
             // 좋아요 개수 조회 및 출력
@@ -439,7 +438,7 @@ public class TravelView {
     }
 
 
-    public void adminPage(){
+    public void adminPage() {
         while (true) {
             System.out.println();
             System.out.println("---관리자 화면---");
@@ -500,8 +499,8 @@ public class TravelView {
         String address = sc.nextLine();
         System.out.print("전화번호 입력 : ");
         String phone = sc.nextLine();
-        TouristSpotDto touristSpotDto = new TouristSpotDto(district,title,description,address,phone);
-        touristSpotController.UpdateTouristSpot(touristSpotDto,input);
+        TouristSpotDto touristSpotDto = new TouristSpotDto(district, title, description, address, phone);
+        touristSpotController.UpdateTouristSpot(touristSpotDto, input);
 
 
     }
@@ -527,11 +526,11 @@ public class TravelView {
     public void displayTouristSpotList(ArrayList<TouristSpotDto> list) {
         for (TouristSpotDto touristSpotDto : list) {
             System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
-            System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
-            System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
-            System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
-            System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
-            System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
+            System.out.println("제목\t\t\t: " + touristSpotDto.getTitle());
+            System.out.println("권역\t\t\t: " + touristSpotDto.getDistrict());
+            System.out.println("설명\t\t\t: " + touristSpotDto.getDescription());
+            System.out.println("주소\t\t\t: " + touristSpotDto.getAddress());
+            System.out.println("전화번호\t\t: " + touristSpotDto.getPhone());
             System.out.println("-------------------------------------");
 
         }
@@ -541,9 +540,9 @@ public class TravelView {
     // ------------------------------- 리뷰 서비스 ------------------------------
     // 내 리뷰 화면
 
-    public void myReviewPage(){
+    public void myReviewPage() {
         Long memberId = Session.getCurrentMemberId();
-        while(true) {
+        while (true) {
             System.out.println();
             System.out.println("---내 리뷰 화면---");
             System.out.println("---내 리뷰 목록---");
@@ -579,9 +578,9 @@ public class TravelView {
     }
 
     // 리뷰 수정 화면
-    public void updateReviewPage(Long reviewId){
+    public void updateReviewPage(Long reviewId) {
         Long memberId = Session.getCurrentMemberId();
-        while(true){
+        while (true) {
 
             System.out.println();
             System.out.println("---" + reviewId + "번 리뷰 수정 화면---");
@@ -645,11 +644,11 @@ public class TravelView {
 
         for (TouristSpotDto touristSpotDto : list) {
             System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
-            System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
-            System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
-            System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
-            System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
-            System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
+            System.out.println("제목\t\t\t: " + touristSpotDto.getTitle());
+            System.out.println("권역\t\t\t: " + touristSpotDto.getDistrict());
+            System.out.println("설명\t\t\t: " + touristSpotDto.getDescription());
+            System.out.println("주소\t\t\t: " + touristSpotDto.getAddress());
+            System.out.println("전화번호\t\t: " + touristSpotDto.getPhone());
             System.out.println("-------------------------------------");
         }
     }
@@ -658,11 +657,11 @@ public class TravelView {
         System.out.println("\n----- 관광지 제목 조회 결과 -----");
         for (TouristSpotDto touristSpotDto : list) {
             System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
-            System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
-            System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
-            System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
-            System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
-            System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
+            System.out.println("제목\t\t\t: " + touristSpotDto.getTitle());
+            System.out.println("권역\t\t\t: " + touristSpotDto.getDistrict());
+            System.out.println("설명\t\t\t: " + touristSpotDto.getDescription());
+            System.out.println("주소\t\t\t: " + touristSpotDto.getAddress());
+            System.out.println("전화번호\t\t: " + touristSpotDto.getPhone());
             System.out.println("-------------------------------------");
         }
     }
@@ -675,6 +674,11 @@ public class TravelView {
             System.out.println();
             System.out.println("---내 즐겨찾기 화면---");
             System.out.println("---내 즐겨찾기 목록---");
+
+            //즐겨찾기한 개수
+            bookMarkController.showBookmarkCount(memberId);
+
+            //즐겨찾기 한 목록
             bookMarkController.selectAllMyBookMarkPage(memberId);
 
             System.out.println("1. 상세 정보 보기");
@@ -704,11 +708,11 @@ public class TravelView {
     public void displayBookMarkList(ArrayList<TouristSpotDto> list) {
         for (TouristSpotDto touristSpotDto : list) {
             System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
-            System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
-            System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
-            System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
-            System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
-            System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
+            System.out.println("제목\t\t\t: " + touristSpotDto.getTitle());
+            System.out.println("권역\t\t\t: " + touristSpotDto.getDistrict());
+            System.out.println("설명\t\t\t: " + touristSpotDto.getDescription());
+            System.out.println("주소\t\t\t: " + touristSpotDto.getAddress());
+            System.out.println("전화번호\t\t: " + touristSpotDto.getPhone());
             System.out.println("-------------------------------------");
         }
     }
@@ -722,15 +726,21 @@ public class TravelView {
         System.out.println("관광지 ID [" + touristSpotId + "]의 현재 좋아요 수: " + totalLikes);
     }
 
+    public void displayBookmarkCountByMember(Long memberId, int totalBookmarks) {
+
+
+        System.out.println("⭐ [회원" + memberId + "]" + "의 현재 즐겨찾기 수: " + totalBookmarks);
+    }
+
     public void displayTouristSpotsByLikes(List<TouristSpotDto> spots) {
         System.out.println("\n------ 관광지 목록 (좋아요 순) ------");
         for (TouristSpotDto touristSpotDto : spots) {
             System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
-            System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
-            System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
-            System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
-            System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
-            System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
+            System.out.println("제목\t\t\t: " + touristSpotDto.getTitle());
+            System.out.println("권역\t\t\t: " + touristSpotDto.getDistrict());
+            System.out.println("설명\t\t\t: " + touristSpotDto.getDescription());
+            System.out.println("주소\t\t\t: " + touristSpotDto.getAddress());
+            System.out.println("전화번호\t\t: " + touristSpotDto.getPhone());
             System.out.println("좋아요 수\t\t: " + touristSpotDto.getLikeCount());
             System.out.println("-------------------------------------");
         }
@@ -743,19 +753,19 @@ public class TravelView {
         } else {
             for (TouristSpotDto touristSpotDto : favorites) {
                 System.out.println("관광지 ID\t: " + touristSpotDto.getTourist_spot_id());
-                System.out.println("제목\t\t\t: "+ touristSpotDto.getTitle());
-                System.out.println("권역\t\t\t: "+ touristSpotDto.getDistrict());
-                System.out.println("설명\t\t\t: "+ touristSpotDto.getDescription());
-                System.out.println("주소\t\t\t: "+ touristSpotDto.getAddress());
-                System.out.println("전화번호\t\t: "+ touristSpotDto.getPhone());
+                System.out.println("제목\t\t\t: " + touristSpotDto.getTitle());
+                System.out.println("권역\t\t\t: " + touristSpotDto.getDistrict());
+                System.out.println("설명\t\t\t: " + touristSpotDto.getDescription());
+                System.out.println("주소\t\t\t: " + touristSpotDto.getAddress());
+                System.out.println("전화번호\t\t: " + touristSpotDto.getPhone());
                 System.out.println("-------------------------------------");
             }
         }
     }
 
-    public void isAdmin(MemberDto memberDto){
+    public void isAdmin(MemberDto memberDto) {
         if (memberDto.getEmail().startsWith("admin")) {
-                Session.setIsAdminTrue();
+            Session.setIsAdminTrue();
         }
 
     }

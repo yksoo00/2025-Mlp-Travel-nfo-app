@@ -8,18 +8,18 @@ public class TouristSpotDto {
     private String description;
     private String address;
     private String phone;
-    private int likeCount;
+    private int like_count;
 
     public TouristSpotDto() {
 
     }
 
     public int getLikeCount() {
-        return likeCount;
+        return like_count;
     }
 
     public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
+        this.like_count = likeCount;
     }
 
 
@@ -39,7 +39,7 @@ public class TouristSpotDto {
         this.description = description;
         this.address = address;
         this.phone = phone;
-        this.likeCount = 0;
+        this.like_count = 0;
     }
 
     public void setTourist_spot_id(Long tourist_spot_id) {

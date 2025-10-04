@@ -10,14 +10,11 @@ public class LikesController {
     private LikesService likesService = new LikesService();
     private TravelView travelView;
 
-    public LikesController() {
-
-    }
+    public LikesController() {}
 
     public LikesController(TravelView travelView) {
         this.travelView = travelView;
     }
-
 
     public void updateLikes(Long memberId, Long touristSpotId) {
         boolean isLiked = likesService.checkIfLiked(memberId, touristSpotId);
